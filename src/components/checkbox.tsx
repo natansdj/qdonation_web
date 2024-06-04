@@ -7,7 +7,7 @@ type Prop = {
 }
 
 const Checkbox = ({ checked, onClick }: Prop) => {
-  return <Image onClick={() => onClick?.()} src={checked ? images.radioOn : images.radio} alt="" className="w-[20px] h-[20px]" />;
+  return <Image onClick={() => onClick?.()} src={checked ? images.radioOn : images.radio} alt="" className="w-[20px] h-[20px] cursor-pointer" />;
 };
 
 export default Checkbox;

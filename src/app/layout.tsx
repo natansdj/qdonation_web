@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider><div className="select-none">{children}</div></ReduxProvider>
       </body>
     </html>
   );
