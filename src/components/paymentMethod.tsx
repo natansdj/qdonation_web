@@ -27,7 +27,7 @@ const PaymentMethod = ({ title, transparent, backAction, bottomComponent }: Prop
         <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
         <div>
           <div className="text-[14px] font-medium text-[#1A1B1E]">QoinCash</div>
-          <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('1000000')}</div>
+          <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('2000000')}</div>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@ const PaymentMethod = ({ title, transparent, backAction, bottomComponent }: Prop
                 <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
                 <div>
                   <div className="text-[14px] font-medium text-[#1A1B1E]">QoinCash</div>
-                  <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('1000000')}</div>
+                  <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('2000000')}</div>
                 </div>
               </div>
               <Checkbox checked={select == 'coin'} />
