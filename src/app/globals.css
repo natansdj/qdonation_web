@@ -26,3 +26,18 @@ body {
   scrollbar-width: none;
   /* Firefox */
 }
+
+.footer-button {
+  width: 100%;
+  max-width: 480px;
+  height: 84px;
+}
+
+.footer-button>div {
+  position: fixed;
+  z-index: 99999999;
+  width: 100%;
+  max-width: 480px;
+  height: 75px;
+  bottom: 0;
+}

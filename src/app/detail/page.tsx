@@ -35,8 +35,10 @@ export default function Detail() {
         </div>
       </div>
     </div>
-    <div className='p-[15px] bg-white'>
-      <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
+    <div className='footer-button'>
+      <div className='p-[15px] bg-white'>
+        <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
+      </div>
     </div>
   </div>
 }
