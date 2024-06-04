@@ -34,10 +34,10 @@ export default function Detail() {
           <Accordion title='Pencairan Dana'>Pencairan Dana</Accordion>
         </div>
       </div>
-    </div>
-    <div className='footer-button'>
-      <div className='p-[15px] bg-white'>
-        <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
+      <div className='footer-button'>
+        <div className='p-[15px] bg-white'>
+          <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
+        </div>
       </div>
     </div>
   </div>

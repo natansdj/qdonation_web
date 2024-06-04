@@ -5,11 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Button from '@/components/button';
-import images from '@/configs/images';
 import Header from '@/components/header';
-
-import CardDonationAmount from '@/components/cardDonationAmount';
 import PaymentMethod from '@/components/paymentMethod';
+import CardDonationAmount from '@/components/cardDonationAmount';
+
+import images from '@/configs/images';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
 
@@ -31,14 +31,14 @@ export default function Detail() {
         <CardDonationAmount onChange={(e) => setValue(e)} />
         <PaymentMethod />
       </div>
-    </div>
-    <div className='footer-button'>
-      <div className='p-[15px] bg-white flex justify-between items-center'>
-        <div>
-          <div className='text-[12px] text-[#1A1B1E] font-medium mb-[5px]'>Total Bayar</div>
-          <div className='text-[20px] text-[#1A1B1E] font-medium'>Rp{parsingCurrencyRupiah(`${value || 0}`)}</div>
+      <div className='footer-button'>
+        <div className='p-[15px] bg-white flex justify-between items-center'>
+          <div>
+            <div className='text-[12px] text-[#1A1B1E] font-medium mb-[5px]'>Total Bayar</div>
+            <div className='text-[20px] text-[#1A1B1E] font-medium'>Rp{parsingCurrencyRupiah(`${value || 0}`)}</div>
+          </div>
+          <Link href='/checkout' className='min-w-[180px]'><Button title='Bayar Sekarang' type='warning' /></Link>
         </div>
-        <Link href='/checkout' className='min-w-[180px]'><Button title='Bayar Sekarang' type='warning' /></Link>
       </div>
     </div>
   </div>

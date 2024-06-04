@@ -1,9 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import images from "@/configs/images";
 
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
-import Link from "next/link";
 
 type Prop = {
   title?: string,
