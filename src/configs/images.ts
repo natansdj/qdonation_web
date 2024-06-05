@@ -14,6 +14,7 @@ const images = {
   progress: require("../assets/image/progress.png"),
   share: require("../assets/image/share.png"),
   clock: require("../assets/image/clock.png"),
+  copy: require("../assets/image/copy.png"),
 };
 
 export default images;
