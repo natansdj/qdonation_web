@@ -35,7 +35,7 @@ export default function Detail() {
         </div>
       </div>
       <div className='footer-button'>
-        <div className='p-[15px] bg-white'>
+        <div className='p-[15px] bg-white border-[#E5E6EB] border-t'>
           <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
         </div>
       </div>

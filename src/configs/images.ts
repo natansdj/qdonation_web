@@ -6,7 +6,13 @@ const images = {
   donation: require("../assets/image/donation.png"),
   radioOn: require("../assets/image/radio-on.png"),
   radio: require("../assets/image/radio.png"),
-  card: require("../assets/image/card.png")
+  card: require("../assets/image/card.png"),
+  close: require("../assets/image/close.png"),
+  statusSuccess: require("../assets/image/status-success.png"),
+  statusWarning: require("../assets/image/status-warning.png"),
+  failed: require("../assets/image/failed.png"),
+  progress: require("../assets/image/progress.png"),
+  share: require("../assets/image/share.png"),
 };
 
 export default images;
