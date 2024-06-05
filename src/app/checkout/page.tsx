@@ -28,7 +28,7 @@ export default function Detail() {
             <div className='text-[16px] font-medium text-[#000]'>Bantu Pasien Rumah Sakit #DanaBerobat</div>
           </div>
         </div>
-        <CardDonationAmount onChange={(e) => setValue(e)} />
+        <CardDonationAmount change={(e) => setValue(e)} />
         <PaymentMethod />
       </div>
       <div className='footer-button'>

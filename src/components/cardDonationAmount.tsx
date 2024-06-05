@@ -2,21 +2,21 @@ import { useEffect, useState } from "react";
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
 
 type Prop = {
-  onChange?: (value: string) => void
+  change?: (value: string) => void
 };
 
 const listNominal = [20000, 50000, 100000, 200000, 500000, 1000000]
 
 let timeOutChnage: any
-const CardDonationAmount = ({ onChange }: Prop) => {
+const CardDonationAmount = ({ change }: Prop) => {
   const [value, setValue] = useState('')
 
   useEffect(() => {
     clearTimeout(timeOutChnage)
     timeOutChnage = setTimeout(() => {
-      onChange?.(value)
+      change?.(value)
     }, 500);
-  }, [value])
+  }, [value, change])
 
   const changeValue = (str: string) => {
     const nominal = str?.replace(/[^0-9]/g, '')

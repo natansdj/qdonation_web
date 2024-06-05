@@ -13,6 +13,7 @@ const images = {
   failed: require("../assets/image/failed.png"),
   progress: require("../assets/image/progress.png"),
   share: require("../assets/image/share.png"),
+  clock: require("../assets/image/clock.png"),
 };
 
 export default images;

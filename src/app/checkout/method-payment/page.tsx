@@ -20,7 +20,7 @@ export default function MethodPayment() {
     if (select) {
       router.back()
     }
-  }, [select])
+  }, [select, router])
 
   return <div className='bg-[#F5F5F5] h-[100vh] flex flex-col justify-between relative'>
     <div className='overflow-auto h-full no-scrollbar'>
