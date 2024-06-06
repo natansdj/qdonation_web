@@ -2,13 +2,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { IUserState, userReducer } from "./userSlice";
+import { IProgramState, programReducer } from "./programSlice";
 import { IAuthState, authReducer } from "./authSlice";
 
 
 export interface StoreStateType {
   auth: IAuthState;
-  user: IUserState;
+  program: IProgramState;
 }
 
 const persistConfig = {
@@ -18,7 +18,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({ 
   auth: authReducer,
-  user: userReducer
+  program: programReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
