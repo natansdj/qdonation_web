@@ -4,7 +4,13 @@ const nextConfig = {
         API_ENDPOINT: process.env.API_ENDPOINT,
     },
     images: {
-        domains: ['picsum.photos']
+        remotePatterns: [
+            {
+                protocol: process.env.IMAGE_PROTOCOL,
+                hostname: process.env.IMAGE_HOSTNAME,
+                pathname: '**',
+            },
+        ],
     }
 }
 export default nextConfig;

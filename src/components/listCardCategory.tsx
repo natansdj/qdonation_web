@@ -17,4 +17,6 @@ const ListCardCategory = memo(({ data }: { data: ICategory[] }) => {
   return false;
 })
 
+ListCardCategory.displayName = 'ListCardCategory';
+
 export default ListCardCategory

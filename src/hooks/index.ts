@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import type { StoreStateType } from "../store";
 
-export const useUserData = () => {
-  return useSelector((state: StoreStateType) => state.user.userState);
+export const useProgramData = () => {
+  return useSelector((state: StoreStateType) => state.program);
 };
 
 export const useChatData = () => {
