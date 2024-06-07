@@ -1,5 +1,5 @@
 'use client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 
 import Header from '@/components/header';
@@ -8,30 +8,80 @@ import Accordion from '@/components/accordion';
 import Button from '@/components/button';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { useCallback, useEffect } from 'react';
+import { getListProgramDetail } from '@/store/programSlice';
+import CardImage from '@/components/cardImage';
+import moment from 'moment';
 
 export default function Detail() {
+  const loadingDetail = useAppSelector((state) => state.program.loadingDetail);
+  const dataDetail = useAppSelector((state) => state.program.dataDetail);
+  const dispatch = useAppDispatch();
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
+  const getDetail = useCallback(() => {
+    if (!loadingDetail && id) {
+      dispatch(getListProgramDetail(id))
+    }
+  }, [dispatch, loadingDetail, id])
+
+  useEffect(() => {
+    getDetail()
+  }, [])
 
   return <div className='bg-[#F5F5F5] h-[100vh] flex flex-col justify-between'>
     <div className='overflow-auto h-full no-scrollbar'>
       <Header backAction={() => router.back()} />
       <div>
-        <div className='h-[200px] w-full'></div>
+        {(!loadingDetail && dataDetail?.data) ?
+          <CardImage url={dataDetail?.data.program_images?.[0]} category={dataDetail?.data?.program_categories?.[0]} />
+          :
+          <div className='animate-pulse'>
+            <div className='bg-slate-400 h-[288px] w-full'></div>
+          </div>}
         <div className='p-[15px] bg-[#fff]'>
-          <div className='text-[16px] font-medium text-[#000] mb-[15px]'>Bantu Pasien Rumah Sakit #DanaBerobat</div>
-          <div className='flex gap-[10px] mb-[15px]'>
-            <div className='text-[#F7B500] text-[16px] font-medium'>Rp{parsingCurrencyRupiah('13200000')}</div>
-            <div className='text-[#111111] text-[14px]'>Rp{parsingCurrencyRupiah('103200000')}</div>
+          {(!loadingDetail && dataDetail?.data) ?
+            <div className='text-[16px] font-medium text-[#000] mb-[15px]'>{dataDetail?.data?.name}</div>
+            :
+            <div className='animate-pulse mb-[15px]'>
+              <div className='bg-slate-400 h-[20px] w-[100px] rounded' />
+            </div>}
+          {loadingDetail ?
+            <div className='animate-pulse flex gap-[10px] mb-[15px]'>
+              <div className='bg-slate-400 h-[20px] w-[100px] rounded' />
+              <div className='bg-slate-400 h-[20px] w-[100px] rounded' />
+            </div>
+            :
+            <div className='flex gap-[10px] mb-[15px]'>
+              <div className='text-[#F7B500] text-[16px] font-medium'>Rp{parsingCurrencyRupiah(`${dataDetail?.data?.donation_sum}`)}</div>
+              <div className='text-[#111111] text-[14px]'>Rp{parsingCurrencyRupiah(`${dataDetail?.data?.has_target}`)}</div>
+            </div>}
+          {loadingDetail ?
+            <div className='animate-pulse'>
+              <div className='bg-slate-400 h-[3px] w-full rounded' />
+            </div>
+            :
+            <Progress percent={dataDetail?.data?.current_progress || 0} />}
+          {loadingDetail ?
+            <div className='animate-pulse mt-[15px]'>
+              <div className='bg-slate-400 h-[20px] w-[100px] rounded' />
+            </div>
+            :
+            <div className='text-[#111111] text-[14px] mt-[15px]'>{dataDetail?.data?.donation_count} Donasi</div>}
+          <div className='text-[#76767A] text-[13px] mt-[15px] pt-[15px] border-t-[#EDEDED] border-t-[2px] border-dashed'>
+            {loadingDetail ?
+              <div className='animate-pulse mt-[15px]'>
+                <div className='bg-slate-400 h-[20px] w-[150px] rounded' />
+              </div>
+              :
+              <div>Berlaku sampai {moment(dataDetail?.data?.period_end_date).format('DD MMM YYYY')}</div>}
           </div>
-          <Progress percent={10} />
-          <div className='text-[#111111] text-[14px] mt-[15px]'>281 Donasi</div>
-          <div className='text-[#76767A] text-[13px] mt-[15px] pt-[15px] border-t-[#EDEDED] border-t-[2px] border-dashed'>Berlaku sampai 25 Jun 2024</div>
         </div>
         <div className='flex flex-col gap-[10px] mt-[10px]'>
-          <Accordion title='Informasi Penggalangan Dana'>Informasi Penggalangan Dana</Accordion>
-          <Accordion title='Cerita Penggalangan Dana'>Cerita Penggalangan Dana</Accordion>
-          <Accordion title='Kabar Terbaru'>Kabar Terbaru</Accordion>
-          <Accordion title='Pencairan Dana'>Pencairan Dana</Accordion>
+          {dataDetail?.data?.program_info?.map?.((item) => <Accordion key={item.name} title={item.name}><div className='p-[15px] bg-white border-t-[#F5F5F5] border-t-[2px]'>{item.description}</div></Accordion>)}
         </div>
       </div>
       <div className='footer-button'>

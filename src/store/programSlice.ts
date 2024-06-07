@@ -2,6 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export interface ItemProgramInfo {
+  name: string
+  description: string;
+  sort_order: number
+}
+
 export interface ItemProgram {
   id: number;
   name: string;
@@ -13,8 +19,11 @@ export interface ItemProgram {
   status: number;
   created_at: string;
   updated_at: string;
+  donation_sum?: number;
+  donation_count?: number;
   program_images: string[];
   program_categories: string[]
+  program_info?: ItemProgramInfo[]
 }
 
 export interface ItemProgramList {
@@ -24,6 +33,10 @@ export interface ItemProgramList {
   total_row?: number;
   total_page?: number;
   items?: ItemProgram[]
+}
+
+export interface ItemProgramDetail {
+  data?: ItemProgram
 }
 
 export interface ICategory {
@@ -38,6 +51,8 @@ export interface ICategoryList {
 export interface IProgramState {
   loadingList: boolean;
   dataList: ItemProgramList;
+  loadingDetail: boolean,
+  dataDetail: ItemProgramDetail;
   loadingListCategory: boolean;
   dataListCategory: ICategoryList;
 }
@@ -45,6 +60,8 @@ export interface IProgramState {
 const initialState: IProgramState = {
   loadingList: false,
   dataList: {} as ItemProgramList,
+  loadingDetail: false,
+  dataDetail: {} as ItemProgramDetail,
   loadingListCategory: false,
   dataListCategory: {} as ICategoryList,
 };
@@ -56,8 +73,13 @@ export const host = axios.create({
   }
 });
 
-export const getListProgram = createAsyncThunk(`get/getListProgram`, async () => {
-  const response = await host.get(`/v1/program?page=1&limit=10`)
+export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit }: { page: number, limit: number }) => {
+  const response = await host.get(`/v1/program?page=${page}&limit=${limit}`)
+  return response.data
+})
+
+export const getListProgramDetail = createAsyncThunk(`get/getListProgramDetail`, async (id: string) => {
+  const response = await host.get(`/v1/program/${id}`)
   return response.data
 })
 
@@ -71,7 +93,7 @@ export const programSlice = createSlice({
   initialState,
   reducers: {
     setProgramState: (state, action: PayloadAction<boolean>) => {
-      state.loadingList = action.payload;
+      // state.loadingList = action.payload;
     },
   },
   extraReducers(builder) {
@@ -82,6 +104,14 @@ export const programSlice = createSlice({
       .addCase(getListProgram.fulfilled, (state, action) => {
         state.loadingList = false
         state.dataList = action.payload
+      })
+      .addCase(getListProgramDetail.pending, (state, action) => {
+        state.loadingDetail = true
+        state.dataDetail = {}
+      })
+      .addCase(getListProgramDetail.fulfilled, (state, action) => {
+        state.loadingDetail = false
+        state.dataDetail = action.payload
       })
       .addCase(getListProgramCategories.pending, (state, action) => {
         state.loadingListCategory = true

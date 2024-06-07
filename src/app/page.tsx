@@ -20,7 +20,7 @@ export default function Produk() {
   const getList = useCallback(() => {
     if (!programState.loadingList) {
       setFirstLoad(false)
-      dispatch(getListProgram())
+      dispatch(getListProgram({ page: 1, limit: 20 }))
       dispatch(getListProgramCategories())
     }
   }, [dispatch, programState.loadingList])
@@ -34,6 +34,6 @@ export default function Produk() {
   return <div className='bg-white h-[100vh] overflow-auto no-scrollbar'>
     <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={programState?.dataListCategory?.items || []} />} />
     <Title title='Semua Donasi' />
-    <ListDonasi data={programState?.dataList?.items || []} />
+    <ListDonasi data={programState?.dataList?.items || []} loading={programState.loadingList} />
   </div>
 }
