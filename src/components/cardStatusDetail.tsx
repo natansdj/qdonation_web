@@ -36,7 +36,7 @@ const CardStatusDetail = ({ status, price }: Prop) => {
 
   if (status == 'success') {
     return <>
-      <div className='p-[15px] pt-[40px] mt-[90px] rounded-[30px] bg-white h-[calc(100vh-465px)]'>
+      <div className='p-[15px] pt-[40px] mt-[90px] rounded-[30px] bg-white min-h-[calc(100vh-465px)]'>
         <div className='-mt-[130px]'>
           <div className={`shadow-[0_6px_15px_-2px_rgba(16,24,40,.10)] rounded-[8px] p-[15px] mt-[20px] bg-white m-[15px] h-[110px]`}>
             <div className='text-[16px] font-medium text-[#1D2129] mb-[10px]'>Donasi</div>
