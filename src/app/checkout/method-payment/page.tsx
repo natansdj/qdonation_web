@@ -22,8 +22,8 @@ export default function MethodPayment() {
     }
   }, [select, router])
 
-  return <div className='bg-[#F5F5F5] h-[100vh] flex flex-col justify-between relative'>
-    <div className='overflow-auto h-full no-scrollbar'>
+  return <div className='bg-[#F5F5F5] flex flex-col justify-between relative'>
+    <div className=''>
       <Header title='Metode Pembayaran' backAction={() => router.back()} />
       <div className="p-[15px] flex flex-col gap-[10px]">
         <div>

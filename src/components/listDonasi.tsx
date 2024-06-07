@@ -9,7 +9,7 @@ import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import { ItemProgram } from "@/store/programSlice";
 import CardImage from "./cardImage";
 
-const ListDonasi = ({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
+const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
   return <div className="flex flex-col px-[15px] gap-[10px]">
     {loading ?
       [1, 2, 3, 4, 5].map(item => <div key={item} className='p-[10px] border-[#EDEDED] border rounded-[10px] animate-pulse'>
@@ -37,8 +37,8 @@ const ListDonasi = ({ data, loading }: { data: ItemProgram[], loading: boolean }
         <div className="flex justify-center py-4">
           <div className="text-[20px] font-bold">Tidak tersedia Donasi</div>
         </div>}
-  </div >
-}
+  </div>
+})
 
 ListDonasi.displayName = 'ListDonasi';
 

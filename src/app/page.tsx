@@ -30,7 +30,7 @@ export default function Produk() {
     getList()
   }, [])
 
-  return <div className='bg-white h-[100vh] overflow-auto no-scrollbar'>
+  return <div className='bg-white'>
     <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={dataListCategory?.items || []} loading={loadingListCategory} />} />
     <Title title='Semua Donasi' />
     <ListDonasi data={dataList?.items || []} loading={loadingList} />

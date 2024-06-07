@@ -17,8 +17,8 @@ export default function Detail() {
   const router = useRouter()
   const [value, setValue] = useState('')
 
-  return <div className='bg-[#F5F5F5] h-[100vh] flex flex-col justify-between relative'>
-    <div className='overflow-auto h-full no-scrollbar'>
+  return <div className='bg-[#F5F5F5] flex flex-col justify-between relative'>
+    <div className=''>
       <Header title='Checkout' backAction={() => router.back()} />
       <div className='flex flex-col gap-[10px]'>
         <div className='p-[15px] bg-[#fff]'>

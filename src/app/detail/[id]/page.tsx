@@ -30,8 +30,8 @@ export default function Detail({ params }: { params: { id: string } }) {
     getDetail()
   }, [])
 
-  return <div className='bg-[#F5F5F5] h-[100vh] flex flex-col justify-between'>
-    <div className='overflow-auto h-full no-scrollbar'>
+  return <div className='bg-[#F5F5F5] flex flex-col justify-between'>
+    <div className=''>
       <Header backAction={() => router.back()} />
       <div>
         {(!loadingDetail && dataDetail?.data) ?

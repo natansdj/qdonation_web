@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`overflow-auto no-scrollbar ${inter.className}`}>
         <ReduxProvider><div className="select-none">{children}</div></ReduxProvider>
       </body>
     </html>

@@ -16,8 +16,8 @@ export default function Status() {
   const [status, setStatus] = useState<'success' | 'failed' | 'progress'>('success')
   const [price, setPrice] = useState<number>(10000)
 
-  return <div className={`${status === 'success' ? 'bg-[#1E2128]' : 'bg-[#fff]'} h-[100vh] flex flex-col justify-between`}>
-    <div className='overflow-auto h-full no-scrollbar'>
+  return <div className={`${status === 'success' ? 'bg-[#1E2128]' : 'bg-[#fff]'} flex flex-col justify-between`}>
+    <div className=''>
       <Header backAction={() => router.back()} typeIcon='close' transparent />
       {status && <CardStatus status={status} price={price} />}
       {status && <CardStatusDetail status={status} price={price} />}
