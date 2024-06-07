@@ -1,5 +1,5 @@
 'use client'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 
 import Header from '@/components/header';
@@ -14,19 +14,17 @@ import { getListProgramDetail } from '@/store/programSlice';
 import CardImage from '@/components/cardImage';
 import moment from 'moment';
 
-export default function Detail() {
+export default function Detail({ params }: { params: { id: string } }) {
   const loadingDetail = useAppSelector((state) => state.program.loadingDetail);
   const dataDetail = useAppSelector((state) => state.program.dataDetail);
   const dispatch = useAppDispatch();
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
 
   const getDetail = useCallback(() => {
-    if (!loadingDetail && id) {
-      dispatch(getListProgramDetail(id))
+    if (!loadingDetail && params.id) {
+      dispatch(getListProgramDetail(params.id))
     }
-  }, [dispatch, loadingDetail, id])
+  }, [dispatch, loadingDetail, params.id])
 
   useEffect(() => {
     getDetail()
@@ -71,6 +69,12 @@ export default function Detail() {
             </div>
             :
             <div className='text-[#111111] text-[14px] mt-[15px]'>{dataDetail?.data?.donation_count} Donasi</div>}
+          {loadingDetail ?
+            <div className='animate-pulse mt-[15px]'>
+              <div className='bg-slate-400 h-[20px] w-full rounded' />
+            </div>
+            :
+            <div className='text-[#111111] text-[14px] mt-[15px]'>{dataDetail?.data?.description}</div>}
           <div className='text-[#76767A] text-[13px] mt-[15px] pt-[15px] border-t-[#EDEDED] border-t-[2px] border-dashed'>
             {loadingDetail ?
               <div className='animate-pulse mt-[15px]'>

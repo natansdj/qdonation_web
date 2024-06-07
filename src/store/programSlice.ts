@@ -73,8 +73,8 @@ export const host = axios.create({
   }
 });
 
-export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit }: { page: number, limit: number }) => {
-  const response = await host.get(`/v1/program?page=${page}&limit=${limit}`)
+export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category }: { page: number, limit: number, category?: number }) => {
+  const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
   return response.data
 })
 

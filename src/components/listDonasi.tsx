@@ -9,7 +9,7 @@ import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import { ItemProgram } from "@/store/programSlice";
 import CardImage from "./cardImage";
 
-const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
+const ListDonasi = ({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
   return <div className="flex flex-col px-[15px] gap-[10px]">
     {loading ?
       [1, 2, 3, 4, 5].map(item => <div key={item} className='p-[10px] border-[#EDEDED] border rounded-[10px] animate-pulse'>
@@ -18,12 +18,12 @@ const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: bool
         <div className='bg-slate-400 h-[3px] w-full rounded' />
       </div>)
       :
-      data.map((item, index) => {
+      data.length ? data.map((item, index) => {
         // let percent = 100 / item.totalPrice * item.price
         // if (percent >= 100) {
         //   percent = 100
         // }
-        return <Link href={`/detail?id=${item.id}`} key={`${item.id}${index}`} className='p-[10px] border-[#EDEDED] border rounded-[10px]'>
+        return <Link href={`/detail/${item.id}`} key={`${item.id}${index}`} className='p-[10px] border-[#EDEDED] border rounded-[10px]'>
           <CardImage url={item.program_images?.[0]} category={item?.program_categories?.[0]} />
           <div className='text-[16px] font-medium text-[#000] my-[10px]'>{item.name}</div>
           <Progress percent={item.current_progress} />
@@ -32,14 +32,13 @@ const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: bool
             <div className="text-[14px] font-medium text-[#111111]">{moment(item.period_end_date).diff(moment(), "days")} <span className="text-[#787878]">Hari lagi</span></div>
           </div>
         </Link>
-      })}
+      })
+        :
+        <div className="flex justify-center py-4">
+          <div className="text-[20px] font-bold">Tidak tersedia Donasi</div>
+        </div>}
   </div >
-}, (prevProps, nextProps) => {
-  if (JSON.stringify(prevProps.data) == JSON.stringify(nextProps.data)) {
-    return true;
-  }
-  return false;
-})
+}
 
 ListDonasi.displayName = 'ListDonasi';
 

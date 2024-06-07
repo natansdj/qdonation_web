@@ -12,28 +12,27 @@ import { getListProgram, getListProgramCategories } from '@/store/programSlice';
 import ListCardCategory from '@/components/listCardCategory';
 
 export default function Produk() {
-  const programState = useAppSelector((state) => state.program);
+  const dataList = useAppSelector((state) => state.program.dataList);
+  const loadingList = useAppSelector((state) => state.program.loadingList);
+  const dataListCategory = useAppSelector((state) => state.program.dataListCategory);
+  const loadingListCategory = useAppSelector((state) => state.program.loadingListCategory);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [firstLoad, setFirstLoad] = useState(true)
 
   const getList = useCallback(() => {
-    if (!programState.loadingList) {
-      setFirstLoad(false)
+    if (!loadingList) {
       dispatch(getListProgram({ page: 1, limit: 20 }))
       dispatch(getListProgramCategories())
     }
-  }, [dispatch, programState.loadingList])
+  }, [dispatch, loadingList])
 
   useEffect(() => {
-    if (firstLoad) {
-      getList()
-    }
-  }, [getList, firstLoad])
+    getList()
+  }, [])
 
   return <div className='bg-white h-[100vh] overflow-auto no-scrollbar'>
-    <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={programState?.dataListCategory?.items || []} />} />
+    <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={dataListCategory?.items || []} loading={loadingListCategory} />} />
     <Title title='Semua Donasi' />
-    <ListDonasi data={programState?.dataList?.items || []} loading={programState.loadingList} />
+    <ListDonasi data={dataList?.items || []} loading={loadingList} />
   </div>
 }
