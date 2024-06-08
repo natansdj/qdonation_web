@@ -10,7 +10,7 @@ const ListCardCategory = memo(({ data, loading }: { data: ICategory[], loading?:
   return <div className="flex p-[15px] gap-[10px] overflow-auto text-[12px] no-scrollbar">
     {loading ?
       [1, 2, 3, 4, 5].map(item => <div key={item} className="animate-pulse">
-        <div className="bg-slate-400 p-[15px] rounded-[10px] h-[45px] w-[100px]" />
+        <div className="bg-slate-400 p-[15px] rounded-[10px] h-[48px] w-[100px]" />
       </div>)
       :
       ([{ name: 'Semua', id: 0 }]).concat(data || []).map((value) => <div

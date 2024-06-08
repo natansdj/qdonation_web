@@ -10,12 +10,16 @@ import { ItemProgram } from "@/store/programSlice";
 import CardImage from "./cardImage";
 
 const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
-  return <div className="flex flex-col px-[15px] gap-[10px]">
+  return <div className="flex flex-col px-[15px]">
     {loading ?
-      [1, 2, 3, 4, 5].map(item => <div key={item} className='p-[10px] border-[#EDEDED] border rounded-[10px] animate-pulse'>
-        <div className='bg-slate-400 h-[288px] w-full' />
+      [1, 2, 3, 4, 5].map(item => <div key={item} className='p-[10px] border-[#EDEDED] border rounded-[10px] animate-pulse mt-[10px]'>
+        <div className='bg-slate-400 h-[250px] w-full' />
         <div className='bg-slate-400 w-[100px] h-[20px] my-[10px]' />
         <div className='bg-slate-400 h-[3px] w-full rounded' />
+        <div className="mt-[10px] flex flex-row justify-between">
+          <div className='bg-slate-400 w-[100px] h-[20px]' />
+          <div className='bg-slate-400 w-[100px] h-[20px]' />
+        </div>
       </div>)
       :
       data.length ? data.map((item, index) => {
@@ -23,7 +27,7 @@ const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: bool
         // if (percent >= 100) {
         //   percent = 100
         // }
-        return <Link href={`/detail/${item.id}`} key={`${item.id}${index}`} className='p-[10px] border-[#EDEDED] border rounded-[10px]'>
+        return <Link href={`/detail/${item.id}`} key={`${item.id}${index}`} className='p-[10px] border-[#EDEDED] border rounded-[10px] mt-[10px]'>
           <CardImage url={item.program_images?.[0]} category={item?.program_categories?.[0]} />
           <div className='text-[16px] font-medium text-[#000] my-[10px]'>{item.name}</div>
           <Progress percent={item.current_progress} />
