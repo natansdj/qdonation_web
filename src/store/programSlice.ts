@@ -27,11 +27,11 @@ export interface ItemProgram {
 }
 
 export interface ItemProgramList {
-  page?: number
+  page: number
   limit?: number;
   search?: string;
   total_row?: number;
-  total_page?: number;
+  total_page: number;
   items?: ItemProgram[]
 }
 
@@ -73,7 +73,7 @@ export const host = axios.create({
   }
 });
 
-export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category }: { page: number, limit: number, category?: number }) => {
+export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category, more }: { page: number, limit: number, category?: number, more?: boolean }) => {
   const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
   return response.data
 })
@@ -99,11 +99,16 @@ export const programSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getListProgram.pending, (state, action) => {
-        state.loadingList = true
+        state.loadingList = !action.meta?.arg?.more
       })
       .addCase(getListProgram.fulfilled, (state, action) => {
         state.loadingList = false
-        state.dataList = action.payload
+        if (action.meta?.arg?.more) {
+          const data = action.payload.items
+          state.dataList = { ...action.payload, items: [...(state.dataList.items || []), ...(data || [])] }
+        } else {
+          state.dataList = action.payload
+        }
       })
       .addCase(getListProgramDetail.pending, (state, action) => {
         state.loadingDetail = true

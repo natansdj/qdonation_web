@@ -18,16 +18,36 @@ export default function Produk() {
   const loadingListCategory = useAppSelector((state) => state.program.loadingListCategory);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [more, setMore] = useState(false)
 
   const getList = useCallback(() => {
     if (!loadingList) {
-      dispatch(getListProgram({ page: 1, limit: 20 }))
+      dispatch(getListProgram({ page: 1, limit: 10 }))
       dispatch(getListProgramCategories())
     }
   }, [dispatch, loadingList])
 
+  const handleScroll = (e: any) => {
+    const body = e.srcElement.body;
+    if (body.offsetHeight < window.scrollY + window.innerHeight + 50) {
+      setMore(true)
+    }
+  }
+
   useEffect(() => {
+    if (!loadingList && dataList.page && dataList.page < dataList.total_page && more) {
+      setMore(false)
+      dispatch(getListProgram({ page: dataList.page + 1, limit: 10, more: true }))
+    }
+  }, [loadingList, dataList, more])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
     getList()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
   }, [])
 
   return <div className='bg-white'>

@@ -14,9 +14,10 @@ export interface StoreStateType {
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ['program']
 };
 
-const rootReducer = combineReducers({ 
+const rootReducer = combineReducers({
   auth: authReducer,
   program: programReducer
 })
