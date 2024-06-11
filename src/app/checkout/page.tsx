@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,10 +12,20 @@ import CardDonationAmount from '@/components/cardDonationAmount';
 import images from '@/configs/images';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { getPaymentList } from '@/store/paymentSlice';
 
 export default function Detail() {
+  const dispatch = useAppDispatch();
+  const dataList = useAppSelector((state) => state.payment.dataList);
   const router = useRouter()
   const [value, setValue] = useState('')
+
+  useEffect(() => {
+    if (!dataList?.items?.length) {
+      dispatch(getPaymentList())
+    }
+  }, [])
 
   return <div className='bg-[#F5F5F5] flex flex-col justify-between relative'>
     <div className=''>

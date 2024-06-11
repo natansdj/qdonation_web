@@ -4,22 +4,25 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { IProgramState, programReducer } from "./programSlice";
 import { IAuthState, authReducer } from "./authSlice";
+import { IPaymentState, paymentReducer } from "./paymentSlice";
 
 
 export interface StoreStateType {
   auth: IAuthState;
   program: IProgramState;
+  payment: IPaymentState;
 }
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['program']
+  blacklist: ['program', 'payment']
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  program: programReducer
+  program: programReducer,
+  payment: paymentReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
