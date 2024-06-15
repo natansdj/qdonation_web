@@ -1,8 +1,8 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import Header from '@/components/header';
 import Button from '@/components/button';
@@ -10,21 +10,51 @@ import CardStatus from '@/components/cardStatus';
 import CardStatusDetail from '@/components/cardStatusDetail';
 
 import images from '@/configs/images';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { statusPayment } from '@/store/paymentSlice';
 
 export default function Status() {
+  const dispatch = useAppDispatch();
+  const searchParams = useSearchParams()
+  const donation_id = Number(searchParams.get('donation_id') || 0)
+  const donation_payment_id = Number(searchParams.get('payment_id') || 0)
+  const paymentResponse = useAppSelector((state) => state.payment.paymentResponse);
+  const paymentStatus = paymentResponse?.payment_info?.status
   const router = useRouter()
-  const [status, setStatus] = useState<'success' | 'failed' | 'progress'>('success')
-  const [price, setPrice] = useState<number>(10000)
+  let status = 'progress'
+  let price = paymentResponse?.amount || 0
+
+  useEffect(() => {
+    getStatus()
+  }, [])
+
+  const getStatus = () => {
+    if (donation_id && donation_payment_id) {
+      dispatch(statusPayment({ donation_id, data: { donation_payment_id } }))
+    }
+  }
+
+  if (paymentStatus) {
+    if ([1, 4].includes(paymentStatus)) {
+      status = 'progress'
+    }
+    if ([3, 5, 6].includes(paymentStatus)) {
+      status = 'failed'
+    }
+    if ([2].includes(paymentStatus)) {
+      status = 'success'
+    }
+  }
 
   return <div className={`${status === 'success' ? 'bg-[#1E2128]' : 'bg-[#fff]'} flex flex-col justify-between`}>
     <div className=''>
       <Header backAction={() => router.back()} typeIcon='close' transparent />
       {status && <CardStatus status={status} price={price} />}
-      {status && <CardStatusDetail status={status} price={price} />}
+      {status && <CardStatusDetail status={status} price={price} title={paymentResponse?.program_name || ''} />}
       <div className={`footer-button ${status == 'success' && 'h-[140px!important]'}`}>
         <div className={`p-[15px] bg-white flex gap-[15px] border-[#E5E6EB] border-t ${status == 'success' && 'flex-col h-[140px!important]'}`}>
           <Link className='w-full' href='/'><Button hover={status != 'success'} title={status == 'success' ? <div className='flex flex-row gap-[5px]'>Bagikan <Image src={images.share} alt='' className='w-[20px] h-[20px]' /></div> : 'Kembali ke Beranda'} /></Link>
-          <div className='w-full' onClick={() => setStatus(status == 'success' ? 'progress' : 'success')} ><Button title={status == 'success' ? 'Kembali ke Beranda' : 'Refresh'} type='warning' /></div>
+          <div className='w-full' onClick={getStatus} ><Button title={status == 'success' ? 'Kembali ke Beranda' : 'Refresh'} type='warning' /></div>
         </div>
       </div>
     </div>

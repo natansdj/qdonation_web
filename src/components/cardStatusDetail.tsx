@@ -2,17 +2,18 @@ import images from "@/configs/images"
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import Image from "next/image"
 import Accordion from "./accordion";
-import Alert from "./alert";
+import Alert, { alertProp } from "./alert";
 import { useState } from "react";
 
 type Prop = {
-  status: 'progress' | 'failed' | 'success',
-  price: number
+  status: 'progress' | 'failed' | 'success' | string,
+  price: number,
+  title: string
 }
 
 let timeout: any
-const CardStatusDetail = ({ status, price }: Prop) => {
-  const [alert, setAlert] = useState<{ header?: string, type?: string, description?: string }>()
+const CardStatusDetail = ({ status, price, title }: Prop) => {
+  const [alert, setAlert] = useState<alertProp>()
 
   const handleCopy = (text: string) => {
     let dummy = document.createElement('input')
@@ -42,7 +43,7 @@ const CardStatusDetail = ({ status, price }: Prop) => {
             <div className='text-[16px] font-medium text-[#1D2129] mb-[10px]'>Donasi</div>
             <div className='flex items-center gap-[10px]'>
               <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
-              <div className='text-[16px] font-medium text-[#000] line-clamp-2'>Bantu Pasien Rumah Sakit #DanaBerobat</div>
+              <div className='text-[16px] font-medium text-[#000] line-clamp-2'>{title}</div>
             </div>
           </div>
           <div className="-mx-[15px]">
@@ -94,7 +95,7 @@ const CardStatusDetail = ({ status, price }: Prop) => {
   return <div className={`shadow-[0_0_15px_-2px_rgba(16,24,40,.08)] rounded-[8px] p-[15px] mt-[20px] bg-white m-[15px]`}>
     <div className='flex items-center gap-[10px]'>
       <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
-      <div className='text-[16px] font-medium text-[#000]'>Bantu Pasien Rumah Sakit #DanaBerobat</div>
+      <div className='text-[16px] font-medium text-[#000]'>{title}</div>
     </div>
     <div className='mt-[15px] pt-[15px] flex flex-row justify-between border-t-[#EDEDED] border-t-[2px] border-dashed'>
       <div className='text-[#4E5969] text-[14px] font-medium'>Nominal Donasi</div>

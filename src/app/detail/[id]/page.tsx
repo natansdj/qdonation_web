@@ -30,7 +30,7 @@ export default function Detail({ params }: { params: { id: string } }) {
     getDetail()
   }, [])
 
-  return <div className='bg-[#F5F5F5] flex flex-col justify-between'>
+  return <div className='flex flex-col justify-between'>
     <div className=''>
       <Header backAction={() => router.back()} />
       <div>
@@ -90,7 +90,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       </div>
       <div className='footer-button'>
         <div className='p-[15px] bg-white border-[#E5E6EB] border-t'>
-          <Link href='/checkout'><Button title='Donasi Sekarang' type='warning' /></Link>
+          <Link href={`/checkout?id=${dataDetail?.data?.id}`}><Button title='Donasi Sekarang' type='warning' /></Link>
         </div>
       </div>
     </div>

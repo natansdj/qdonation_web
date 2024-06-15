@@ -11,10 +11,10 @@ const PaymentMethod = () => {
 
   return <>
     <div className='p-[15px] bg-[#fff]'>
-      <div className="flex flex-row justify-between mb-[15px]">
+      <div className={`flex flex-row justify-between ${choose?.id ? 'mb-[15px]' : ''}`}>
         <div className="text-[16px] font-medium text-[#000]">Metode Pembayaran</div>
         <Link href="/checkout/method-payment">
-          <div className="text-[16px] font-medium text-[#F7B500] cursor-pointer">Ubah</div>
+          <div className="text-[16px] font-medium text-[#F7B500] cursor-pointer">{choose?.id ? 'Ubah' : 'Pilih'}</div>
         </Link>
       </div>
       {choose?.id && <div className='flex gap-[10px] items-center'>

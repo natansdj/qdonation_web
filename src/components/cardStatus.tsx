@@ -3,7 +3,7 @@ import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import Image from "next/image"
 
 type Prop = {
-  status: 'progress' | 'failed' | 'success',
+  status: 'progress' | 'failed' | 'success' | string,
   price: number
 }
 

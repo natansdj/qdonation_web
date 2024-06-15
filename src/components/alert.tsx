@@ -1,11 +1,11 @@
 
-type Prop = {
+export type alertProp = {
   header?: string | React.ReactNode,
   description?: string | React.ReactNode,
   type?: 'warning' | 'danger' | string
 }
 
-const Alert = ({ header, description, type }: Prop) => {
+const Alert = ({ header, description, type }: alertProp) => {
 
   return <div className="absolute z-[9999999] top-[20px] left-0 right-0 flex justify-center">
     <div

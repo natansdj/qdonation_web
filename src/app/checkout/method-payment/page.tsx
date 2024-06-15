@@ -19,12 +19,16 @@ export default function MethodPayment() {
   const dispatch = useAppDispatch();
   const dataList = useAppSelector((state) => state.payment.dataList);
   const loadingList = useAppSelector((state) => state.payment.loadingList);
+  const choose = useAppSelector((state) => state.payment.choose);
   const router = useRouter()
-  const [select, setSelect] = useState('')
+  const [select, setSelect] = useState<number>(0)
 
   useEffect(() => {
     if (!dataList?.items?.length) {
       dispatch(getPaymentList())
+    }
+    if (choose?.id) {
+      setSelect(choose.id)
     }
   }, [])
 
@@ -115,9 +119,9 @@ export default function MethodPayment() {
               }
               return <div key={item.id} onClick={() => {
                 if (is_active) {
-                  const value = item.code == select ? '' : item.code
+                  const value = item.id == select ? 0 : item.id
                   setSelect(value)
-                  dispatch(setPaymentChoose({ ...item, type: items.name }))
+                  dispatch(setPaymentChoose({ ...item, type: items.name,channel_id:items.id }))
                 }
               }} className="border-b border-b-[#DEDEDE] last:border-b-0 py-[10px]">
                 <div className={`flex justify-between ${is_active ? 'cursor-pointer' : 'cursor-not-allowed'}`}>
@@ -128,7 +132,7 @@ export default function MethodPayment() {
                       alt={item.name} />}
                     <div className={`text-[14px] ${is_active ? 'text-[#1A1B1E]' : 'text-[#C6C6C6]'}`}>{item.name}</div>
                   </div>
-                  <Checkbox checked={select == item.code} />
+                  <Checkbox checked={select == item.id} />
                 </div>
               </div>
             })}
