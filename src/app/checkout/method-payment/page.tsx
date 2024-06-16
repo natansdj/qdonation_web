@@ -121,7 +121,7 @@ export default function MethodPayment() {
                 if (is_active) {
                   const value = item.id == select ? 0 : item.id
                   setSelect(value)
-                  dispatch(setPaymentChoose({ ...item, type: items.name,channel_id:items.id }))
+                  dispatch(setPaymentChoose({ ...item, type: items.name, type_code: items.code, method_id: items.id }))
                 }
               }} className="border-b border-b-[#DEDEDE] last:border-b-0 py-[10px]">
                 <div className={`flex justify-between ${is_active ? 'cursor-pointer' : 'cursor-not-allowed'}`}>

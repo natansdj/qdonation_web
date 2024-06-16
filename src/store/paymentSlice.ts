@@ -16,15 +16,15 @@ export interface IPaymentStatusBody {
 }
 
 export interface IPaymentProsesResponse {
-  donation_id: number;
-  program_id: number;
-  program_name: string;
-  customer_id: string;
-  customer_name: string;
-  amount: number;
-  created_at: string;
-  status: statusType;
-  payment_info: {
+  donation_id?: number;
+  program_id?: number;
+  program_name?: string;
+  customer_id?: string;
+  customer_name?: string;
+  amount?: number;
+  created_at?: string;
+  status?: statusType;
+  payment_info?: {
     donation_payment_id: number;
     payment_method_name: string;
     payment_channel_name: string;
@@ -43,15 +43,21 @@ export interface IPaymentProsesResponse {
 }
 
 export interface IPaymentChoose {
-  id: number;
-  channel_id: number;
-  type: string;
-  name: string;
-  code: string;
+  id?: number;
+  method_id?: number;
+  type?: string;
+  name?: string;
+  code?: string;
+  type_code?: string;
   icon_url?: string;
   description?: string;
   is_active?: boolean;
   sort_order?: number;
+  card_cvn?: string;
+  card_account_number?: string;
+  card_exp_month?: string;
+  card_exp_year?: string;
+  customer_id?: string;
 }
 
 export interface IPaymentCard {
@@ -67,6 +73,7 @@ export interface IPaymentCard {
 export interface IPayment {
   id: number
   name: string;
+  code: string;
   icon_url?: string;
   description?: string;
   is_active?: boolean;
@@ -157,6 +164,9 @@ export const paymentSlice = createSlice({
     setPaymentValue: (state, action: PayloadAction<{ value: number }>) => {
       state.value = action.payload.value;
     },
+    clearStatusProses: (state) => {
+      state.paymentResponse = {}
+    },
   },
   extraReducers(builder) {
     builder
@@ -193,5 +203,5 @@ export const paymentSlice = createSlice({
   }
 });
 
-export const { setPaymentChoose, setPaymentValue } = paymentSlice.actions;
+export const { setPaymentChoose, setPaymentValue, clearStatusProses } = paymentSlice.actions;
 export const paymentReducer = paymentSlice.reducer;

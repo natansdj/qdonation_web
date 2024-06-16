@@ -11,7 +11,7 @@ import CardStatusDetail from '@/components/cardStatusDetail';
 
 import images from '@/configs/images';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { statusPayment, statusType } from '@/store/paymentSlice';
+import { clearStatusProses, statusPayment, statusType } from '@/store/paymentSlice';
 
 export default function Status() {
   const dispatch = useAppDispatch();
@@ -55,7 +55,10 @@ export default function Status() {
 
   return <div className={`${status() === 'success' ? 'bg-[#1E2128]' : 'bg-[#fff]'} flex flex-col justify-between`}>
     <div className=''>
-      <Header backAction={() => router.back()} typeIcon='close' transparent />
+      <Header backAction={() => {
+        dispatch(clearStatusProses())
+        router.back()
+      }} typeIcon='close' transparent />
       {paymentResponse && <CardStatus data={{ ...paymentResponse, status: status() }} />}
       {paymentResponse && <CardStatusDetail data={{ ...paymentResponse, status: status() }} />}
       <div className={`footer-button ${status() == 'success' && 'h-[140px!important]'}`}>

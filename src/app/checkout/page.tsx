@@ -13,10 +13,11 @@ import images from '@/configs/images';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getPaymentList, prosesPayment } from '@/store/paymentSlice';
+import { clearStatusProses, getPaymentList, prosesPayment } from '@/store/paymentSlice';
 
 import { setAlertState } from '@/store/programSlice';
 
+let timeout: any
 export default function Detail() {
   const dispatch = useAppDispatch();
   const dataList = useAppSelector((state) => state.payment.dataList);
@@ -28,9 +29,16 @@ export default function Detail() {
   const router = useRouter()
 
   useEffect(() => {
-    if (paymentResponse?.donation_id && paymentResponse?.payment_info?.donation_payment_id) {
-      router.push(`/status?donation_id=${paymentResponse?.donation_id}&payment_id=${paymentResponse?.payment_info?.donation_payment_id}`)
-    }
+    dispatch(clearStatusProses())
+  }, [])
+
+  useEffect(() => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      if (paymentResponse?.donation_id && paymentResponse?.payment_info?.donation_payment_id) {
+        router.push(`/status?donation_id=${paymentResponse?.donation_id}&payment_id=${paymentResponse?.payment_info?.donation_payment_id}`)
+      }
+    }, 1000)
   }, [paymentResponse])
 
   useEffect(() => {
@@ -40,14 +48,40 @@ export default function Detail() {
   }, [])
 
   const payment = () => {
-    if (choose?.id && choose?.channel_id && id && value) {
+    if (choose?.id && choose?.method_id && id && value) {
+      const data: any = {
+        amount: value,
+        payment_channel_id: choose.id,
+        payment_method_id: choose.method_id
+      }
+      if (choose.type_code == 'emoney') {
+        if (choose.customer_id) {
+          data.customer_id = choose.customer_id
+        } else {
+          return dispatch(setAlertState({
+            type: 'warning',
+            header: 'Checkout',
+            description: `Mohon isi id pelanggan`,
+          }))
+        }
+      }
+      if (choose.type_code == 'card') {
+        if (choose.card_cvn && choose.card_account_number && choose.card_exp_year && choose.card_exp_month) {
+          data.card_cvn = choose.card_cvn
+          data.card_account_number = choose.card_account_number
+          data.card_exp_month = choose.card_exp_month
+          data.card_exp_year = choose.card_exp_year
+        } else {
+          return dispatch(setAlertState({
+            type: 'warning',
+            header: 'Checkout',
+            description: `Mohon isi form kartu kredit anda`,
+          }))
+        }
+      }
       dispatch(prosesPayment({
         id,
-        data: {
-          amount: value,
-          payment_channel_id: choose.channel_id,
-          payment_method_id: choose.id
-        }
+        data
       }))
     } else {
       dispatch(setAlertState({
