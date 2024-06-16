@@ -3,6 +3,8 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setAlertState } from "./programSlice";
 
+export type statusType = 'progress' | 'failed' | 'success' | 'wait_payment'
+
 export interface IPaymentProsesBody {
   amount: number;
   payment_method_id: number;
@@ -21,6 +23,7 @@ export interface IPaymentProsesResponse {
   customer_name: string;
   amount: number;
   created_at: string;
+  status: statusType;
   payment_info: {
     donation_payment_id: number;
     payment_method_name: string;

@@ -5,14 +5,9 @@ import Accordion from "./accordion";
 
 import { useAppDispatch } from "@/store";
 import { setAlertState } from "@/store/programSlice";
+import { IPaymentProsesResponse } from "@/store/paymentSlice";
 
-type Prop = {
-  status: 'progress' | 'failed' | 'success' | string,
-  price: number,
-  title: string
-}
-
-const CardStatusDetail = ({ status, price, title }: Prop) => {
+const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
   const dispatch = useAppDispatch();
 
   const handleCopy = (text: string) => {
@@ -31,7 +26,7 @@ const CardStatusDetail = ({ status, price, title }: Prop) => {
     }));
   }
 
-  if (status == 'success') {
+  if (data?.status == 'success') {
     return <>
       <div className='p-[15px] pt-[40px] mt-[90px] rounded-[30px] bg-white min-h-[calc(100vh-465px)]'>
         <div className='-mt-[130px]'>
@@ -39,7 +34,7 @@ const CardStatusDetail = ({ status, price, title }: Prop) => {
             <div className='text-[16px] font-medium text-[#1D2129] mb-[10px]'>Donasi</div>
             <div className='flex items-center gap-[10px]'>
               <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
-              <div className='text-[16px] font-medium text-[#000] line-clamp-2'>{title}</div>
+              <div className='text-[16px] font-medium text-[#000] line-clamp-2'>{data?.program_name}</div>
             </div>
           </div>
           <div className="-mx-[15px]">
@@ -90,11 +85,11 @@ const CardStatusDetail = ({ status, price, title }: Prop) => {
   return <div className={`shadow-[0_0_15px_-2px_rgba(16,24,40,.08)] rounded-[8px] p-[15px] mt-[20px] bg-white m-[15px]`}>
     <div className='flex items-center gap-[10px]'>
       <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
-      <div className='text-[16px] font-medium text-[#000]'>{title}</div>
+      <div className='text-[16px] font-medium text-[#000]'>{data?.program_name}</div>
     </div>
     <div className='mt-[15px] pt-[15px] flex flex-row justify-between border-t-[#EDEDED] border-t-[2px] border-dashed'>
       <div className='text-[#4E5969] text-[14px] font-medium'>Nominal Donasi</div>
-      <div className='text-[#1D2129] text-[14px] font-medium'>Rp{parsingCurrencyRupiah(`${price || 0}`)}</div>
+      <div className='text-[#1D2129] text-[14px] font-medium'>Rp{parsingCurrencyRupiah(`${data?.amount || 0}`)}</div>
     </div>
     <div className='bg-[#FDF3E6] p-[15px] rounded-[8px] mt-[15px] flex flex-row gap-[10px] items-center'>
       <Image className='w-[24px] h-[24px]' src={images.clock} alt='' />
