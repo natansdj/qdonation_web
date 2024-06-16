@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setAlertState } from "./programSlice";
 
 export interface IPaymentProsesBody {
   amount: number;
@@ -101,19 +102,46 @@ export const host = axios.create({
   }
 });
 
-export const getPaymentList = createAsyncThunk(`get/paymentList`, async () => {
-  const response = await host.get(`/v1/payment?status=0`)
-  return response.data
+export const getPaymentList = createAsyncThunk(`get/paymentList`, async ({ } = {}, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.get(`/v1/payment?status=0`)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
-export const prosesPayment = createAsyncThunk(`post/paymentProses`, async ({ id, data }: { id: string, data: IPaymentProsesBody }) => {
-  const response = await host.post(`/v1/program/${id}/donate`, data)
-  return response.data
+export const prosesPayment = createAsyncThunk(`post/paymentProses`, async ({ id, data }: { id: string, data: IPaymentProsesBody }, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.post(`/v1/program/${id}/donate`, data)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
-export const statusPayment = createAsyncThunk(`post/paymentStatus`, async ({ donation_id, data }: { donation_id: number, data: IPaymentStatusBody }) => {
-  const response = await host.post(`/v1/donation/${donation_id}/status`, data)
-  return response.data
+export const statusPayment = createAsyncThunk(`post/paymentStatus`, async ({ donation_id, data }: { donation_id: number, data: IPaymentStatusBody }, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.post(`/v1/donation/${donation_id}/status`, data)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
 export const paymentSlice = createSlice({
@@ -143,8 +171,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(prosesPayment.rejected, (state, action) => {
         state.paymentLoading = false
-        // state.dataList = action.payload
-        console.log(action, '---error---!');
       })
       .addCase(prosesPayment.fulfilled, (state, action) => {
         state.paymentLoading = false
@@ -156,8 +182,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(statusPayment.rejected, (state, action) => {
         state.paymentLoading = false
-        // state.dataList = action.payload
-        console.log(action, '---error---!');
       })
       .addCase(statusPayment.fulfilled, (state, action) => {
         state.paymentLoading = false

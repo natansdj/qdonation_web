@@ -15,9 +15,8 @@ import { parsingCurrencyRupiah } from '@/utils/Helpers';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getPaymentList, prosesPayment } from '@/store/paymentSlice';
 
-import Alert, { alertProp } from '@/components/alert';
+import { setAlertState } from '@/store/programSlice';
 
-let timeout: any
 export default function Detail() {
   const dispatch = useAppDispatch();
   const dataList = useAppSelector((state) => state.payment.dataList);
@@ -27,7 +26,6 @@ export default function Detail() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const router = useRouter()
-  const [alert, setAlert] = useState<alertProp>()
 
   useEffect(() => {
     if (paymentResponse?.donation_id && paymentResponse?.payment_info?.donation_payment_id) {
@@ -52,15 +50,11 @@ export default function Detail() {
         }
       }))
     } else {
-      setAlert({
+      dispatch(setAlertState({
         type: 'warning',
         header: 'Checkout',
         description: `Mohon pilih tipe pembayaran dan isi nominal donasi`,
-      })
-      clearTimeout(timeout)
-      timeout = setTimeout(() => {
-        setAlert({})
-      }, 3000);
+      }))
     }
   }
 
@@ -88,7 +82,5 @@ export default function Detail() {
         </div>
       </div>
     </div>
-
-    {alert?.header && <Alert {...alert} />}
   </div>
 }

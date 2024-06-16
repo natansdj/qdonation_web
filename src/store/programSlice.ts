@@ -2,6 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export type AlertProp = {
+  header?: string | React.ReactNode,
+  description?: string | React.ReactNode,
+  type?: 'warning' | 'danger'
+}
+
 export interface ItemProgramInfo {
   name: string
   description: string;
@@ -55,6 +61,7 @@ export interface IProgramState {
   dataDetail: ItemProgramDetail;
   loadingListCategory: boolean;
   dataListCategory: ICategoryList;
+  alert: any;
 }
 
 const initialState: IProgramState = {
@@ -64,6 +71,7 @@ const initialState: IProgramState = {
   dataDetail: {} as ItemProgramDetail,
   loadingListCategory: false,
   dataListCategory: {} as ICategoryList,
+  alert: {}
 };
 
 export const host = axios.create({
@@ -73,19 +81,46 @@ export const host = axios.create({
   }
 });
 
-export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category, more }: { page: number, limit: number, category?: number, more?: boolean }) => {
-  const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
-  return response.data
+export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category, more }: { page: number, limit: number, category?: number, more?: boolean }, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
-export const getListProgramDetail = createAsyncThunk(`get/getListProgramDetail`, async (id: string) => {
-  const response = await host.get(`/v1/program/${id}`)
-  return response.data
+export const getListProgramDetail = createAsyncThunk(`get/getListProgramDetail`, async (id: string, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.get(`/v1/program/${id}`)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
-export const getListProgramCategories = createAsyncThunk(`get/getListProgramCategories`, async () => {
-  const response = await host.get(`/v1/program/categories`)
-  return response.data
+export const getListProgramCategories = createAsyncThunk(`get/getListProgramCategories`, async ({ } = {}, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await host.get(`/v1/program/categories`)
+    return response.data
+  } catch (error: any) {
+    dispatch(setAlertState({
+      type: 'danger',
+      header: 'Error',
+      description: error?.response?.data?.error?.message || error?.message
+    }))
+    return rejectWithValue(null)
+  }
 })
 
 export const programSlice = createSlice({
@@ -94,6 +129,9 @@ export const programSlice = createSlice({
   reducers: {
     setProgramState: (state, action: PayloadAction<boolean>) => {
       // state.loadingList = action.payload;
+    },
+    setAlertState: (state, action: PayloadAction<AlertProp>) => {
+      state.alert = action.payload;
     },
   },
   extraReducers(builder) {
@@ -128,5 +166,5 @@ export const programSlice = createSlice({
   }
 });
 
-export const { setProgramState } = programSlice.actions;
+export const { setProgramState, setAlertState } = programSlice.actions;
 export const programReducer = programSlice.reducer;

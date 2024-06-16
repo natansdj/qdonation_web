@@ -2,8 +2,9 @@ import images from "@/configs/images"
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import Image from "next/image"
 import Accordion from "./accordion";
-import Alert, { alertProp } from "./alert";
-import { useState } from "react";
+
+import { useAppDispatch } from "@/store";
+import { setAlertState } from "@/store/programSlice";
 
 type Prop = {
   status: 'progress' | 'failed' | 'success' | string,
@@ -11,9 +12,8 @@ type Prop = {
   title: string
 }
 
-let timeout: any
 const CardStatusDetail = ({ status, price, title }: Prop) => {
-  const [alert, setAlert] = useState<alertProp>()
+  const dispatch = useAppDispatch();
 
   const handleCopy = (text: string) => {
     let dummy = document.createElement('input')
@@ -24,15 +24,11 @@ const CardStatusDetail = ({ status, price, title }: Prop) => {
     document.body.removeChild(dummy)
 
     // message.success(`${type} telah tersalin`);
-    setAlert({
+    dispatch(setAlertState({
       type: 'warning',
       header: 'Tersalin',
       description: `kode telah tersalin`,
-    })
-    clearTimeout(timeout)
-    timeout = setTimeout(() => {
-      setAlert({})
-    }, 3000);
+    }));
   }
 
   if (status == 'success') {
@@ -89,7 +85,6 @@ const CardStatusDetail = ({ status, price, title }: Prop) => {
           </div>
         </div>
       </div>
-      {alert?.header && <Alert {...alert} />}
     </>
   }
   return <div className={`shadow-[0_0_15px_-2px_rgba(16,24,40,.08)] rounded-[8px] p-[15px] mt-[20px] bg-white m-[15px]`}>
