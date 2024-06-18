@@ -15,7 +15,7 @@ import { parsingCurrencyRupiah } from '@/utils/Helpers';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getListProgramDetail, setAlertState } from '@/store/programSlice';
-import { clearStatusProses, getPaymentList, prosesPayment } from '@/store/paymentSlice';
+import { clearStatusProses, getPaymentList, prosesPayment, setPaymentChoose } from '@/store/paymentSlice';
 
 let timeout: any
 export default function Detail() {
@@ -98,7 +98,10 @@ export default function Detail() {
 
   return <div className='flex flex-col justify-between relative'>
     <div className=''>
-      <Header title='Checkout' backAction={() => router.back()} />
+      <Header title='Checkout' backAction={() => {
+        dispatch(setPaymentChoose({}))
+        router.back()
+      }} />
       <div className='flex flex-col gap-[10px]'>
         <div className='p-[15px] bg-[#fff]'>
           <div className='text-[18px] font-medium text-[#1A1B1E] mb-[15px]'>Rincian Donasi</div>

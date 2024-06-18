@@ -1,11 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 
-import images from "@/configs/images";
-
-import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { IPaymentChoose, setPaymentChoose } from "@/store/paymentSlice";
+import { setPaymentChoose } from "@/store/paymentSlice";
 
 const PaymentMethod = () => {
   const dispatch = useAppDispatch();
