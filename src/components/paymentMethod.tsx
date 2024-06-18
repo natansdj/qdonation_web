@@ -45,7 +45,7 @@ const PaymentMethod = () => {
         <div>
           <div className="text-[14px] font-bold text-[#1A1B1E]">{choose.type}</div>
           <div className="text-[12px] text-[#1A1B1E] mb-[10px]">{choose.name}</div>
-          <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('2000000')}</div>
+          {/* <div className="text-[16px] font-medium text-[#F7B500]">Rp{parsingCurrencyRupiah('2000000')}</div> */}
         </div>
       </div>}
     </div>

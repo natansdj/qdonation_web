@@ -1,9 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image';
-import Link from 'next/link';
 
+import Alert from '@/components/alert';
 import Button from '@/components/button';
 import Header from '@/components/header';
 import PaymentMethod from '@/components/paymentMethod';
@@ -12,10 +12,10 @@ import CardDonationAmount from '@/components/cardDonationAmount';
 import images from '@/configs/images';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
-import { useAppDispatch, useAppSelector } from '@/store';
-import { clearStatusProses, getPaymentList, prosesPayment } from '@/store/paymentSlice';
 
-import { setAlertState } from '@/store/programSlice';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { getListProgramDetail, setAlertState } from '@/store/programSlice';
+import { clearStatusProses, getPaymentList, prosesPayment } from '@/store/paymentSlice';
 
 let timeout: any
 export default function Detail() {
@@ -24,12 +24,16 @@ export default function Detail() {
   const choose = useAppSelector((state) => state.payment.choose);
   const value = useAppSelector((state) => state.payment.value);
   const paymentResponse = useAppSelector((state) => state.payment.paymentResponse);
+  const dataDetail = useAppSelector((state) => state.program.dataDetail);
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const router = useRouter()
 
   useEffect(() => {
     dispatch(clearStatusProses())
+    if (id && (!dataDetail?.data?.id || `${dataDetail?.data?.id || 0}` != id)) {
+      dispatch(getListProgramDetail(id))
+    }
   }, [])
 
   useEffect(() => {
@@ -100,7 +104,7 @@ export default function Detail() {
           <div className='text-[18px] font-medium text-[#1A1B1E] mb-[15px]'>Rincian Donasi</div>
           <div className='flex items-center gap-[10px]'>
             <Image className='w-[40px] h-[40px]' src={images.donation} alt='' />
-            <div className='text-[16px] font-medium text-[#000]'>Bantu Pasien Rumah Sakit #DanaBerobat</div>
+            <div className='text-[16px] font-medium text-[#000]'>{dataDetail?.data?.name || '-'}</div>
           </div>
         </div>
         <CardDonationAmount />
@@ -116,5 +120,6 @@ export default function Detail() {
         </div>
       </div>
     </div>
+    <Alert />
   </div>
 }

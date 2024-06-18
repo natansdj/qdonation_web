@@ -1,18 +1,20 @@
 'use client'
+import { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
+import moment from 'moment';
 
-import Header from '@/components/header';
-import Progress from '@/components/progress';
+import CardImage from '@/components/cardImage';
 import Accordion from '@/components/accordion';
+import Progress from '@/components/progress';
+import Header from '@/components/header';
 import Button from '@/components/button';
+import Alert from '@/components/alert';
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
+
 import { useAppDispatch, useAppSelector } from '@/store';
-import { useCallback, useEffect } from 'react';
 import { getListProgramDetail } from '@/store/programSlice';
-import CardImage from '@/components/cardImage';
-import moment from 'moment';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const loadingDetail = useAppSelector((state) => state.program.loadingDetail);
@@ -94,5 +96,6 @@ export default function Detail({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+    <Alert />
   </div>
 }

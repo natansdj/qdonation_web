@@ -1,5 +1,5 @@
-import images from "@/configs/images"
 import Image from "next/image"
+import images from "@/configs/images"
 
 type Prop = {
   checked: boolean,

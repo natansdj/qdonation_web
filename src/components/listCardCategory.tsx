@@ -1,7 +1,7 @@
-import { useAppDispatch } from "@/store";
-import { ICategory, getListProgram } from "@/store/programSlice"
 import { memo, useState } from "react"
 
+import { useAppDispatch } from "@/store";
+import { ICategory, getListProgram } from "@/store/programSlice"
 
 const ListCardCategory = memo(({ data, loading }: { data: ICategory[], loading?: boolean }) => {
   const dispatch = useAppDispatch();

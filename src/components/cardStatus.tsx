@@ -1,7 +1,10 @@
-import images from "@/configs/images"
-import { IPaymentProsesResponse } from "@/store/paymentSlice";
-import { parsingCurrencyRupiah } from "@/utils/Helpers";
 import Image from "next/image"
+
+import images from "@/configs/images"
+
+import { IPaymentProsesResponse } from "@/store/paymentSlice";
+
+import { parsingCurrencyRupiah } from "@/utils/Helpers";
 
 const CardStatus = ({ data }: { data: IPaymentProsesResponse }) => {
   return <div className="flex flex-col items-center">

@@ -1,13 +1,13 @@
 import React, { memo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
 
 import Progress from "./progress";
+import CardImage from "./cardImage";
 
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
+
 import { ItemProgram } from "@/store/programSlice";
-import CardImage from "./cardImage";
 
 const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: boolean }) => {
   return <div className="flex flex-col px-[15px]">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import "./globals.css";
-import Alert from "@/components/alert";
 
 const ReduxProvider = dynamic(() => import("@/store/redux-provider"), {
   ssr: false
@@ -24,7 +23,6 @@ export default function RootLayout({
       <body className={`overflow-auto no-scrollbar ${inter.className}`}>
         <ReduxProvider>
           <div className="select-none">{children}</div>
-          <Alert />
         </ReduxProvider>
       </body>
     </html>

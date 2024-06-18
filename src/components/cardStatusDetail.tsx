@@ -1,12 +1,15 @@
-import images from "@/configs/images"
-import { parsingCurrencyRupiah } from "@/utils/Helpers";
+import moment from "moment";
 import Image from "next/image"
+
+import images from "@/configs/images"
+
+import { parsingCurrencyRupiah } from "@/utils/Helpers";
+
 import Accordion from "./accordion";
 
 import { useAppDispatch } from "@/store";
 import { setAlertState } from "@/store/programSlice";
 import { IPaymentProsesResponse } from "@/store/paymentSlice";
-import moment from "moment";
 
 const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
   const dispatch = useAppDispatch();
@@ -19,7 +22,6 @@ const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
     document.execCommand('copy')
     document.body.removeChild(dummy)
 
-    // message.success(`${type} telah tersalin`);
     dispatch(setAlertState({
       type: 'warning',
       header: 'Tersalin',
@@ -41,18 +43,18 @@ const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
       <div>Rp{parsingCurrencyRupiah(`${data?.amount || 0}`)}</div>
     </div>
   </>)
-  const cardRefrensiTRX = (<Accordion defaultShow iconDown title={<div className="text-[14px] font-semibold text-[#1D2129]">Rincian Referensi</div>} >
+  const cardRefrensiTRX = (data?.payment_info?.trx_no || data?.payment_info?.reference_no) ? (<Accordion defaultShow iconDown title={<div className="text-[14px] font-semibold text-[#1D2129]">Rincian Referensi</div>} >
     <div className="p-[15px] pt-0 flex flex-col gap-[10px]">
-      <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      {data?.payment_info?.trx_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
         <div>No. Transaksi</div>
         <div className="text-[#1D2129] flex items-center gap-[5px]">{data?.payment_info?.trx_no}<Image onClick={() => data?.payment_info?.trx_no && handleCopy(data?.payment_info?.trx_no)} src={images.copy} alt="" className="w-[20px] h-[20px] cursor-pointer" /></div>
-      </div>
-      <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      </div>}
+      {data?.payment_info?.reference_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
         <div>No. Referensi</div>
         <div className="text-[#1D2129] flex items-center gap-[5px]">{data?.payment_info?.reference_no}<Image onClick={() => data?.payment_info?.reference_no && handleCopy(data?.payment_info?.reference_no)} src={images.copy} alt="" className="w-[20px] h-[20px] cursor-pointer" /></div>
-      </div>
+      </div>}
     </div>
-  </Accordion>)
+  </Accordion>) : null
 
   if (data?.status == 'success') {
     return <>

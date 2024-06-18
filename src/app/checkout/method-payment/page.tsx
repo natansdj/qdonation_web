@@ -2,15 +2,11 @@
 import { useEffect, useState } from "react";
 
 import { useRouter } from 'next/navigation'
-import Image from "next/image";
 
-import Header from "@/components/header";
 import Checkbox from "@/components/checkbox";
-import AccordionPayment from "@/components/accordionPayment";
-
-import images from "@/configs/images";
-
-import { parsingCurrencyRupiah } from "@/utils/Helpers";
+import Header from "@/components/header";
+import Button from "@/components/button";
+import Alert from "@/components/alert";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getPaymentList, setPaymentChoose } from "@/store/paymentSlice";
@@ -138,6 +134,12 @@ export default function MethodPayment() {
             })}
           </div>)}
       </div>
+      {select && <div className='footer-button'>
+        <div className='p-[15px] bg-white flex justify-between items-center border-[#E5E6EB] border-t'>
+          <div onClick={() => router.back()} className='w-full'><Button title='Pilih' type='warning' /></div>
+        </div>
+      </div>}
     </div>
+    <Alert />
   </div>
 }

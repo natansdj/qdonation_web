@@ -3,13 +3,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-import Header from "@/components/header";
+import Alert from '@/components/alert';
 import Title from '@/components/title';
+import Header from "@/components/header";
 import ListDonasi from '@/components/listDonasi';
+import ListCardCategory from '@/components/listCardCategory';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getListProgram, getListProgramCategories } from '@/store/programSlice';
-import ListCardCategory from '@/components/listCardCategory';
 
 export default function Produk() {
   const dataList = useAppSelector((state) => state.program.dataList);
@@ -54,5 +55,6 @@ export default function Produk() {
     <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={dataListCategory?.items || []} loading={loadingListCategory} />} />
     <Title title='Semua Donasi' />
     <ListDonasi data={dataList?.items || []} loading={loadingList} />
+    <Alert />
   </div>
 }

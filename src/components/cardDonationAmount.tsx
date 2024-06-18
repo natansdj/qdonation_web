@@ -1,5 +1,7 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
+
 import { parsingCurrencyRupiah } from "@/utils/Helpers";
+
 import { setPaymentValue } from "@/store/paymentSlice";
 import { useAppDispatch, useAppSelector } from "@/store";
 
