@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 const CardImage = ({ url, category }: { url: string, category: string }) => {
-  return <div className="relative">
+  return <div className="relative min-h-[200px] w-full bg-slate-400">
     <Image
       src={url}
       alt=""
