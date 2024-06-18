@@ -49,44 +49,41 @@ const PaymentMethod = () => {
         </div>
       </div>}
     </div>
-    {choose?.id &&
-      <div className='p-[15px] bg-[#fff]'>
-        {choose.type_code == 'card' && <>
-          Kartu Akun Number
+    {choose?.type_code == 'card' && <div className='p-[15px] bg-[#fff]'>
+      Kartu Akun Number
+      <input
+        className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
+        value={choose?.card_account_number}
+        onChange={(e) => changeValue(e.target.value, 'card_account_number')} />
+      Kartu CVN
+      <input
+        className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
+        value={choose?.card_cvn}
+        onChange={(e) => changeValue(e.target.value, 'card_cvn')} />
+      <div className="flex justify-between gap-[10px]">
+        <div>
+          Tahun
           <input
             className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
-            value={choose?.card_account_number}
-            onChange={(e) => changeValue(e.target.value, 'card_account_number')} />
-          Kartu CVN
+            value={choose?.card_exp_year}
+            onChange={(e) => changeValue(e.target.value, 'card_exp_year')} />
+        </div>
+        <div>
+          Bulan
           <input
             className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
-            value={choose?.card_cvn}
-            onChange={(e) => changeValue(e.target.value, 'card_cvn')} />
-          <div className="flex justify-between gap-[10px]">
-            <div>
-              Tahun
-              <input
-                className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
-                value={choose?.card_exp_year}
-                onChange={(e) => changeValue(e.target.value, 'card_exp_year')} />
-            </div>
-            <div>
-              Bulan
-              <input
-                className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
-                value={choose?.card_exp_month}
-                onChange={(e) => changeValue(e.target.value, 'card_exp_month')} />
-            </div>
-          </div>
-        </>}
-        {choose.type_code == 'emoney' && <>
-          ID Pelanggan
-          <input
-            className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
-            value={choose?.customer_id}
-            onChange={(e) => changeValue(e.target.value, 'customer_id')} />
-        </>}
-      </div>}
+            value={choose?.card_exp_month}
+            onChange={(e) => changeValue(e.target.value, 'card_exp_month')} />
+        </div>
+      </div>
+    </div>}
+    {choose?.type_code == 'emoney' && <div className='p-[15px] bg-[#fff]'>
+      ID Pelanggan
+      <input
+        className="border-[#C8C7B7] border rounded-[8px] p-[8px] px-[12px] text-[#1D2129] text-[20px] font-semibold my-[10px] w-full focus:border-[#F7B500] focus:outline-none"
+        value={choose?.customer_id}
+        onChange={(e) => changeValue(e.target.value, 'customer_id')} />
+    </div>}
   </>
 }
 
