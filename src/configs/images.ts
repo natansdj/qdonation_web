@@ -1,6 +1,7 @@
 const images = {
   backArrow: require("../assets/image/back-arrow.png"),
   arrowTop: require("../assets/image/arrow-top.png"),
+  arrowDownWhite: require("../assets/image/arrow-down-white.png"),
   gradient: require("../assets/image/gradient.png"),
   plus: require("../assets/image/plus.png"),
   donation: require("../assets/image/donation.png"),
@@ -15,6 +16,7 @@ const images = {
   share: require("../assets/image/share.png"),
   clock: require("../assets/image/clock.png"),
   copy: require("../assets/image/copy.png"),
+  indonesia: require("../assets/image/indonesia.png"),
 };
 
 export default images;

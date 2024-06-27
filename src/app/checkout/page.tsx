@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image';
 
@@ -16,6 +16,7 @@ import { parsingCurrencyRupiah } from '@/utils/Helpers';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getListProgramDetail, setAlertState } from '@/store/programSlice';
 import { clearStatusProses, getPaymentList, prosesPayment, setPaymentChoose } from '@/store/paymentSlice';
+import CardButtonNext from '@/components/cardButtonNext';
 
 let timeout: any
 export default function Detail() {
@@ -28,6 +29,8 @@ export default function Detail() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const router = useRouter()
+  const [show, setShow] = useState(false)
+  const [dataCheckout, setDataCheckout] = useState({} as any)
 
   useEffect(() => {
     dispatch(clearStatusProses())
@@ -83,10 +86,8 @@ export default function Detail() {
           }))
         }
       }
-      dispatch(prosesPayment({
-        id,
-        data
-      }))
+      setShow(true)
+      setDataCheckout(data)
     } else {
       dispatch(setAlertState({
         type: 'warning',
@@ -123,6 +124,14 @@ export default function Detail() {
         </div>
       </div>
     </div>
+    {show && <CardButtonNext onClose={() => setShow(false)} onSubmit={() => {
+      if (dataCheckout?.amount && id) {
+        dispatch(prosesPayment({
+          id,
+          data: dataCheckout
+        }))
+      }
+    }} />}
     <Alert />
   </div>
 }

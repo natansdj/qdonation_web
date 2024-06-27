@@ -82,7 +82,8 @@ export interface IPayment {
 }
 
 export interface IPaymentList {
-  items?: IPayment[]
+  items?: IPayment[],
+  admin_fee?: number
 }
 
 export interface IPaymentState {
