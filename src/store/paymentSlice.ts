@@ -25,6 +25,9 @@ export interface IPaymentProsesResponse {
   created_at?: string;
   status?: statusType;
   payment_info?: {
+    admin_fee: number;
+    fees: number;
+    total_amount: number;
     donation_payment_id: number;
     payment_method_name: string;
     payment_channel_name: string;
@@ -181,7 +184,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(prosesPayment.pending, (state, action) => {
         state.paymentLoading = true
-        state.dataList = {}
       })
       .addCase(prosesPayment.rejected, (state, action) => {
         state.paymentLoading = false
@@ -192,7 +194,6 @@ export const paymentSlice = createSlice({
       })
       .addCase(statusPayment.pending, (state, action) => {
         state.paymentLoading = true
-        state.dataList = {}
       })
       .addCase(statusPayment.rejected, (state, action) => {
         state.paymentLoading = false

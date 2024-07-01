@@ -22,6 +22,7 @@ let timeout: any
 export default function Detail() {
   const dispatch = useAppDispatch();
   const dataList = useAppSelector((state) => state.payment.dataList);
+  const paymentLoading = useAppSelector((state) => state.payment.paymentLoading);
   const choose = useAppSelector((state) => state.payment.choose);
   const value = useAppSelector((state) => state.payment.value);
   const paymentResponse = useAppSelector((state) => state.payment.paymentResponse);
@@ -53,6 +54,12 @@ export default function Detail() {
       dispatch(getPaymentList())
     }
   }, [])
+
+  useEffect(() => {
+    if (!paymentLoading) {
+      setShow(false)
+    }
+  }, [paymentLoading])
 
   const payment = () => {
     if (choose?.id && choose?.method_id && id && value) {

@@ -38,18 +38,26 @@ const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
       <div>Jumlah</div>
       <div className="text-[#1D2129]">Rp{parsingCurrencyRupiah(`${data?.amount || 0}`)}</div>
     </div>
+    {!!data?.payment_info?.admin_fee && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      <div>Biaya Admin</div>
+      <div className="text-[#1D2129]">Rp{parsingCurrencyRupiah(`${data?.payment_info?.admin_fee || 0}`)}</div>
+    </div>}
+    {!!data?.payment_info?.fees && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      <div>Biaya Lainnya</div>
+      <div className="text-[#1D2129]">Rp{parsingCurrencyRupiah(`${data?.payment_info?.fees || 0}`)}</div>
+    </div>}
     <div className="flex flex-row justify-between text-[14px] font-medium text-[#1D2129]">
       <div>Total</div>
-      <div>Rp{parsingCurrencyRupiah(`${data?.amount || 0}`)}</div>
+      <div>Rp{parsingCurrencyRupiah(`${data?.payment_info?.total_amount || 0}`)}</div>
     </div>
   </>)
   const cardRefrensiTRX = (data?.payment_info?.trx_no || data?.payment_info?.reference_no) ? (<Accordion defaultShow iconDown title={<div className="text-[14px] font-semibold text-[#1D2129]">Rincian Referensi</div>} >
     <div className="p-[15px] pt-0 flex flex-col gap-[10px]">
-      {data?.payment_info?.trx_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      {!!data?.payment_info?.trx_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
         <div>No. Transaksi</div>
         <div className="text-[#1D2129] flex items-center gap-[5px]">{data?.payment_info?.trx_no}<Image onClick={() => data?.payment_info?.trx_no && handleCopy(data?.payment_info?.trx_no)} src={images.copy} alt="" className="w-[20px] h-[20px] cursor-pointer" /></div>
       </div>}
-      {data?.payment_info?.reference_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+      {!!data?.payment_info?.reference_no && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
         <div>No. Referensi</div>
         <div className="text-[#1D2129] flex items-center gap-[5px]">{data?.payment_info?.reference_no}<Image onClick={() => data?.payment_info?.reference_no && handleCopy(data?.payment_info?.reference_no)} src={images.copy} alt="" className="w-[20px] h-[20px] cursor-pointer" /></div>
       </div>}
@@ -78,7 +86,7 @@ const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
                   <div>Metode Pembayaran</div>
                   <div className="text-[#1D2129]">{data?.payment_info?.payment_method_name}</div>
                 </div>
-                {data?.payment_info?.payment_channel_name && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+                {!!data?.payment_info?.payment_channel_name && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
                   <div>Nama Bank</div>
                   <div className="text-[#1D2129]">{data?.payment_info?.payment_channel_name}</div>
                 </div>}
@@ -116,11 +124,11 @@ const CardStatusDetail = ({ data }: { data: IPaymentProsesResponse }) => {
             <div>Metode Pembayaran</div>
             <div className="text-[#1D2129]">{data?.payment_info?.payment_method_name}</div>
           </div>
-          {data?.payment_info?.payment_channel_name && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+          {!!data?.payment_info?.payment_channel_name && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
             <div>Nama Bank</div>
             <div className="text-[#1D2129]">{data?.payment_info?.payment_channel_name}</div>
           </div>}
-          {data?.payment_info?.va_number && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
+          {!!data?.payment_info?.va_number && <div className="flex flex-row justify-between text-[14px] font-medium text-[#4E5969]">
             <div>No Virtual Account</div>
             <div className="text-[#1D2129] flex items-center gap-[5px]">{data?.payment_info?.va_number}<Image onClick={() => data?.payment_info?.va_number && handleCopy(data?.payment_info?.va_number)} src={images.copy} alt="" className="w-[20px] h-[20px] cursor-pointer" /></div>
           </div>}
