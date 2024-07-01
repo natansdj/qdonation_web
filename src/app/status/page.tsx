@@ -66,7 +66,7 @@ export default function Status() {
       <div className={`footer-button ${status() == 'success' && 'h-[140px!important]'}`}>
         <div className={`p-[15px] bg-white flex gap-[15px] border-[#E5E6EB] border-t ${status() == 'success' && 'flex-col h-[140px!important]'}`}>
           <Link className='w-full' href='/'><Button hover={status() != 'success'} title={status() == 'success' ? <div className='flex flex-row gap-[5px]'>Bagikan <Image src={images.share} alt='' className='w-[20px] h-[20px]' /></div> : 'Kembali ke Beranda'} /></Link>
-          <div className='w-full' onClick={() => status() == 'success' ? router.back() : getStatus()} ><Button title={status() == 'success' ? 'Kembali ke Beranda' : 'Refresh'} type='warning' /></div>
+          <div className='w-full' onClick={() => status() == 'success' ? router.push('/') : getStatus()} ><Button title={status() == 'success' ? 'Kembali ke Beranda' : 'Refresh'} type='warning' /></div>
         </div>
       </div>
     </div>
