@@ -15,7 +15,7 @@ const CardStatus = ({ data }: { data: IPaymentProsesResponse }) => {
       </div>}
     </div>
     <div className={`${data?.status == 'success' ? 'text-[#00B42A]' : 'text-[#FF7D00]'} text-[16px] font-medium text-center`}>{data?.status == 'success' ? 'TRANSAKSI BERHASIL' : (data?.status == 'progress' ? 'Donasi sedang diproses' : (data?.status == 'wait_payment' ? 'Donasi sedang menunggu pembayaran' : 'Pembayaran gagal'))}</div>
-    <div className={`${data?.status == 'success' ? 'text-[#fff]' : 'text-[#111]'} text-[28px] font-semibold text-center`}>Rp{parsingCurrencyRupiah(`${data?.amount || 0}`)}</div>
+    <div className={`${data?.status == 'success' ? 'text-[#fff]' : 'text-[#111]'} text-[28px] font-semibold text-center`}>Rp{parsingCurrencyRupiah(`${data?.payment_info?.total_amount || 0}`)}</div>
   </div>
 };
 
