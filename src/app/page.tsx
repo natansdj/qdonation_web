@@ -1,7 +1,7 @@
 
 'use client'
 import { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import Alert from '@/components/alert';
 import Title from '@/components/title';
@@ -11,8 +11,10 @@ import ListCardCategory from '@/components/listCardCategory';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getListProgram, getListProgramCategories } from '@/store/programSlice';
+import { setToken } from '@/store/paymentSlice';
 
 export default function Produk() {
+
   const dataList = useAppSelector((state) => state.program.dataList);
   const loadingList = useAppSelector((state) => state.program.loadingList);
   const dataListCategory = useAppSelector((state) => state.program.dataListCategory);
@@ -20,6 +22,9 @@ export default function Produk() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [more, setMore] = useState(false)
+
+  const searchParams = useSearchParams();
+  let token = searchParams.get('token');
 
   const getList = useCallback(() => {
     if (!loadingList) {
@@ -34,6 +39,17 @@ export default function Produk() {
       setMore(true)
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      token = token?.replace(/\s/g, '+')
+      localStorage.setItem('token', token)
+      setToken(token)
+    } else {
+      localStorage.removeItem('token')
+      setToken('')
+    }
+  }, [token])
 
   useEffect(() => {
     if (!loadingList && dataList.page && dataList.page < dataList.total_page && more) {

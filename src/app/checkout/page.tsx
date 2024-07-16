@@ -15,7 +15,7 @@ import { parsingCurrencyRupiah } from '@/utils/Helpers';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getListProgramDetail, setAlertState } from '@/store/programSlice';
-import { clearStatusProses, getPaymentList, prosesPayment, setPaymentChoose } from '@/store/paymentSlice';
+import { clearStatusProses, getPaymentList, prosesPayment, setPaymentChoose, setToken } from '@/store/paymentSlice';
 import CardButtonNext from '@/components/cardButtonNext';
 
 let timeout: any
@@ -33,6 +33,12 @@ export default function Detail() {
   const [show, setShow] = useState(false)
   const [dataCheckout, setDataCheckout] = useState({} as any)
 
+  const token = localStorage.getItem('token')
+
+  useEffect(() => {
+    if (token) setToken(token)
+  }, [token])
+
   useEffect(() => {
     dispatch(clearStatusProses())
     if (id && (!dataDetail?.data?.id || `${dataDetail?.data?.id || 0}` != id)) {
@@ -44,7 +50,8 @@ export default function Detail() {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
       if (paymentResponse?.donation_id && paymentResponse?.payment_info?.donation_payment_id) {
-        router.push(`/status?donation_id=${paymentResponse?.donation_id}&payment_id=${paymentResponse?.payment_info?.donation_payment_id}`)
+        if (token) router.push(`/thanks?donation_id=${paymentResponse?.donation_id}`)
+        else router.push(`/status?donation_id=${paymentResponse?.donation_id}&payment_id=${paymentResponse?.payment_info?.donation_payment_id}`)
       }
     }, 1000)
   }, [paymentResponse])
@@ -62,7 +69,10 @@ export default function Detail() {
   }, [paymentLoading])
 
   const payment = () => {
-    if (choose?.id && choose?.method_id && id && value) {
+    if (token && value) {
+      setShow(true)
+      setDataCheckout({ amount: value })
+    } else if (choose?.id && choose?.method_id && id && value) {
       const data: any = {
         amount: value,
         payment_channel_id: choose.id,
@@ -119,7 +129,7 @@ export default function Detail() {
           </div>
         </div>
         <CardDonationAmount />
-        {!!value && <PaymentMethod />}
+        {!!value && !token && <PaymentMethod />}
       </div>
       <div className='footer-button'>
         <div className='p-[15px] bg-white flex justify-between items-center border-[#E5E6EB] border-t'>
