@@ -11,6 +11,7 @@ import Header from '@/components/header';
 import Button from '@/components/button';
 import Alert from '@/components/alert';
 
+
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
 
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -31,6 +32,15 @@ export default function Detail({ params }: { params: { id: string } }) {
   useEffect(() => {
     getDetail()
   }, [])
+
+  useEffect(() => {
+    const getTokenDetail = window.location.href.split('token=')[1]
+    if(!getTokenDetail) {
+      router.push('/qr-invalid')
+    }
+  },[router])
+
+
 
   return <div className='flex flex-col justify-between'>
     <div className=''>
@@ -56,8 +66,8 @@ export default function Detail({ params }: { params: { id: string } }) {
             </div>
             :
             <div className='flex gap-[10px] mb-[15px]'>
-              <div className='text-[#F7B500] text-[16px] font-medium'>Rp{parsingCurrencyRupiah(`${dataDetail?.data?.donation_sum}`)}</div>
-              <div className='text-[#111111] text-[14px]'>Rp{parsingCurrencyRupiah(`${dataDetail?.data?.has_target}`)}</div>
+              <div className='text-[#F7B500] text-[16px] font-medium'>{dataDetail?.data?.current_progress}%</div>
+              {/* <div className='text-[#111111] text-[14px]'>100%</div> */}
             </div>}
           {loadingDetail ?
             <div className='animate-pulse'>
@@ -86,9 +96,9 @@ export default function Detail({ params }: { params: { id: string } }) {
               <div>Berlaku sampai {moment(dataDetail?.data?.period_end_date).format('DD MMM YYYY')}</div>}
           </div>
         </div>
-        <div className='flex flex-col gap-[10px] mt-[10px]'>
+        {/* <div className='flex flex-col gap-[10px] mt-[10px]'>
           {dataDetail?.data?.program_info?.map?.((item) => <Accordion key={item.name} title={item.name}><div className='p-[15px] bg-white border-t-[#F5F5F5] border-t-[2px]'>{item.description}</div></Accordion>)}
-        </div>
+        </div> */}
       </div>
       <div className='footer-button'>
         <div className='p-[15px] bg-white border-[#E5E6EB] border-t'>

@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import Link from "next/link";
 import moment from "moment";
+import { useRouter } from "next/router";
 
 import Progress from "./progress";
 import CardImage from "./cardImage";
@@ -32,7 +33,7 @@ const ListDonasi = memo(({ data, loading }: { data: ItemProgram[], loading: bool
           <div className='text-[16px] font-medium text-[#000] my-[10px]'>{item.name}</div>
           <Progress percent={item.current_progress} />
           <div className="flex justify-between mb-[5px] mt-[15px]">
-            <div className='text-[16px] font-medium text-[#000]'>Rp{parsingCurrencyRupiah(`${item.has_target}`)}</div>
+            <div className='text-[16px] font-medium text-[#000]'>{item.current_progress}%</div>
             <div className="text-[14px] font-medium text-[#111111]">{moment(item.period_end_date).diff(moment(), "days")} <span className="text-[#787878]">Hari lagi</span></div>
           </div>
         </Link>

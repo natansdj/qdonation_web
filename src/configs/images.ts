@@ -17,6 +17,7 @@ const images = {
   clock: require("../assets/image/clock.png"),
   copy: require("../assets/image/copy.png"),
   indonesia: require("../assets/image/indonesia.png"),
+  qrNotFound: require("../assets/image/not-found.png")
 };
 
 export default images;
