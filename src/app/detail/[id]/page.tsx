@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 import moment from 'moment';
 
@@ -10,6 +10,7 @@ import Progress from '@/components/progress';
 import Header from '@/components/header';
 import Button from '@/components/button';
 import Alert from '@/components/alert';
+import { setToken } from '@/store/paymentSlice';
 
 
 import { parsingCurrencyRupiah } from '@/utils/Helpers';
@@ -21,6 +22,9 @@ export default function Detail({ params }: { params: { id: string } }) {
   const loadingDetail = useAppSelector((state) => state.program.loadingDetail);
   const dataDetail = useAppSelector((state) => state.program.dataDetail);
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  let token = searchParams.get('token');
+
   const router = useRouter()
 
   const getDetail = useCallback(() => {
@@ -34,11 +38,19 @@ export default function Detail({ params }: { params: { id: string } }) {
   }, [])
 
   useEffect(() => {
-    const getTokenDetail = window.location.href.split('token=')[1]
-    if(!getTokenDetail) {
+    // const getTokenDetail = window.location.href.split('token=')[1]
+    // if(!getTokenDetail) {
+    //   router.push('/qr-invalid')
+    // }
+    if (token) {
+      token = token?.replace(/\s/g, '+')
+      localStorage.setItem('token', token)
+      setToken(token)
+    } else {
+      localStorage.removeItem('token')  
       router.push('/qr-invalid')
     }
-  },[router])
+  },[])
 
 
 
