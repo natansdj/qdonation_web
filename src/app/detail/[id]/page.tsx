@@ -22,7 +22,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const dataDetail = useAppSelector((state) => state.program.dataDetail);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  let token = searchParams.get("token");
+  let token = searchParams.get("token") || localStorage.getItem("token")
 
   const router = useRouter();
 
