@@ -30,6 +30,7 @@ export interface ItemProgram {
   program_images: string[];
   program_categories: string[]
   program_info?: ItemProgramInfo[]
+  view_type?:string
 }
 
 export interface ItemProgramList {
@@ -86,7 +87,6 @@ export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ pa
     const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
     return response.data
   } catch (error: any) {
-    console.log(error)
     dispatch(setAlertState({
       type: 'danger',
       header: 'Error',
