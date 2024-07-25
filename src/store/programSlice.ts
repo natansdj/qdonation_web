@@ -30,6 +30,7 @@ export interface ItemProgram {
   program_images: string[];
   program_categories: string[]
   program_info?: ItemProgramInfo[]
+  view_type?:string
 }
 
 export interface ItemProgramList {
