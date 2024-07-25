@@ -97,6 +97,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                         `${dataDetail?.data?.donation_sum}`
                       )}
                     </div>
+                    /
                     <div className="text-[#111111] text-[14px]">
                       Rp
                       {parsingCurrencyRupiah(`${dataDetail?.data?.has_target}`)}
