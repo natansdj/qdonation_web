@@ -37,7 +37,7 @@ const ListDonasi = memo(
             // }
             return (
               <Link
-                href={`/detail/${item.id}?token=asdasd`}
+                href={`/detail/${item.id}`}
                 key={`${item.id}${index}`}
                 className="p-[10px] border-[#EDEDED] border rounded-[10px] mt-[10px]"
               >
