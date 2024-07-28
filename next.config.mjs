@@ -11,6 +11,11 @@ const nextConfig = {
         hostname: process.env.IMAGE_HOSTNAME,
         pathname: '**',
       },
+      {
+        protocol: process.env.IMAGE_PROTOCOL,
+        hostname: 'qoinvoucher.s3.ap-southeast-1.amazonaws.com',
+        pathname: '**',
+      },
     ],
   }
 }
