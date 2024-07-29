@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import moment from "moment";
@@ -12,7 +12,7 @@ import Button from "@/components/button";
 import Alert from "@/components/alert";
 import { setToken } from "@/store/paymentSlice";
 
-import { parsingCurrencyRupiah } from "@/utils/Helpers";
+import { generateRandomTimestamp, parsingCurrencyRupiah } from "@/utils/Helpers";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getListProgramDetail } from "@/store/programSlice";
@@ -23,6 +23,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   let token = searchParams.get("token") || localStorage.getItem("token")
+  const [randomNumber,setRandomNumber] = useState<String>('')
 
   const router = useRouter();
 
@@ -36,6 +37,8 @@ export default function Detail({ params }: { params: { id: string } }) {
     getDetail();
   }, []);
 
+
+
   useEffect(() => {
     // const getTokenDetail = window.location.href.split('token=')[1]
     // if(!getTokenDetail) {
@@ -46,17 +49,15 @@ export default function Detail({ params }: { params: { id: string } }) {
       localStorage.setItem("token", token);
       setToken(token);
     } else {
-      localStorage.removeItem("token");
-      router.push("/qr-invalid");
+     router.push('/qr-invalid')
     }
   }, []);
-
-  console.log(dataDetail);
 
   return (
     <div className="flex flex-col justify-between">
       <div className="">
-        <Header backAction={() => router.back()} />
+        {!token && <Header backAction={() => router.back()} />}
+        
         <div>
           {!loadingDetail && dataDetail?.data ? (
             <CardImage

@@ -68,7 +68,8 @@ export default function Produk() {
   }, [])
 
   return <div className='bg-white'>
-    <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={dataListCategory?.items || []} loading={loadingListCategory} />} />
+    {!token &&  <Header title="Donasi" backAction={() => router.back()} bottomComponent={<ListCardCategory data={dataListCategory?.items || []} loading={loadingListCategory} />} />}
+   
     <Title title='Semua Donasi' />
     <ListDonasi data={dataList?.items || []} loading={loadingList} />
     <Alert />
