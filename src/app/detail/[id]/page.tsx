@@ -12,7 +12,10 @@ import Button from "@/components/button";
 import Alert from "@/components/alert";
 import { setToken } from "@/store/paymentSlice";
 
-import { generateRandomTimestamp, parsingCurrencyRupiah } from "@/utils/Helpers";
+import {
+  generateRandomTimestamp,
+  parsingCurrencyRupiah,
+} from "@/utils/Helpers";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getListProgramDetail } from "@/store/programSlice";
@@ -22,8 +25,8 @@ export default function Detail({ params }: { params: { id: string } }) {
   const dataDetail = useAppSelector((state) => state.program.dataDetail);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  let token = searchParams.get("token") || localStorage.getItem("token")
-  const [randomNumber,setRandomNumber] = useState<String>('')
+  let token = searchParams.get("token") || localStorage.getItem("token");
+  const [randomNumber, setRandomNumber] = useState<String>("");
 
   const router = useRouter();
 
@@ -37,27 +40,10 @@ export default function Detail({ params }: { params: { id: string } }) {
     getDetail();
   }, []);
 
-
-
-  useEffect(() => {
-    // const getTokenDetail = window.location.href.split('token=')[1]
-    // if(!getTokenDetail) {
-    //   router.push('/qr-invalid')
-    // }
-    if (token) {
-      token = token?.replace(/\s/g, "+");
-      localStorage.setItem("token", token);
-      setToken(token);
-    } else {
-     router.push('/qr-invalid')
-    }
-  }, []);
-
   return (
     <div className="flex flex-col justify-between">
       <div className="">
         {!token && <Header backAction={() => router.back()} />}
-        
         <div>
           {!loadingDetail && dataDetail?.data ? (
             <CardImage
