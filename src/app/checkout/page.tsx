@@ -23,6 +23,7 @@ import {
   setToken,
 } from "@/store/paymentSlice";
 import CardButtonNext from "@/components/cardButtonNext";
+import CartDonationProfile from "@/components/cartDonationProfile";
 
 let timeout: any;
 export default function Detail() {
@@ -174,6 +175,7 @@ export default function Detail() {
           </div>
           <CardDonationAmount />
           {!!value && !token && <PaymentMethod />}
+          <CartDonationProfile />
         </div>
         <div className="footer-button">
           <div className="p-[15px] bg-white flex justify-between items-center border-[#E5E6EB] border-t">

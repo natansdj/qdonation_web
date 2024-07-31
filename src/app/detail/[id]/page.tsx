@@ -39,19 +39,19 @@ export default function Detail({ params }: { params: { id: string } }) {
 
 
 
-  useEffect(() => {
-    // const getTokenDetail = window.location.href.split('token=')[1]
-    // if(!getTokenDetail) {
-    //   router.push('/qr-invalid')
-    // }
-    if (token) {
-      token = token?.replace(/\s/g, "+");
-      localStorage.setItem("token", token);
-      setToken(token);
-    } else {
-     router.push('/qr-invalid')
-    }
-  }, []);
+  // useEffect(() => {
+  //   // const getTokenDetail = window.location.href.split('token=')[1]
+  //   // if(!getTokenDetail) {
+  //   //   router.push('/qr-invalid')
+  //   // }
+  //   if (token) {
+  //     token = token?.replace(/\s/g, "+");
+  //     localStorage.setItem("token", token);
+  //     setToken(token);
+  //   } else {
+  //    router.push('/qr-invalid')
+  //   }
+  // }, []);
 
   return (
     <div className="flex flex-col justify-between">

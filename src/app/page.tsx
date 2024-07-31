@@ -30,7 +30,7 @@ export default function Produk() {
 
   const getList = useCallback(() => {
     if (!loadingList) {
-      dispatch(getListProgram({ page: 1, limit: 10 }));
+      dispatch(getListProgram({ page: 1, limit: 10,client_code: 621574 }));
       dispatch(getListProgramCategories());
     }
   }, [dispatch, loadingList]);
@@ -62,7 +62,7 @@ export default function Produk() {
     ) {
       setMore(false);
       dispatch(
-        getListProgram({ page: dataList.page + 1, limit: 10, more: true })
+        getListProgram({ page: dataList.page + 1, limit: 10, more: true ,client_code: 621574})
       );
     }
   }, [loadingList, dataList, more]);
