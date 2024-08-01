@@ -17,7 +17,7 @@ const ListCardCategory = memo(({ data, loading }: { data: ICategory[], loading?:
         key={value.id + value.name}
         onClick={() => {
           setCategory(value.id)
-          dispatch(getListProgram({ page: 1, limit: 20, category: value.id }))
+          dispatch(getListProgram({ page: 1, limit: 20, category: value.id, client_code: 621574 }))
         }}
         className={`${category == value.id ? 'bg-[#F7B500] text-[#2A1700] font-semibold' : 'bg-[#F4F3F7] text-[#47483B]'} cursor-pointer p-[15px] rounded-[10px] whitespace-nowrap`}>{value.name}</div>)
     }

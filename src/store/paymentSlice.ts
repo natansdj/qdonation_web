@@ -116,6 +116,10 @@ export const host = axios.create({
   }
 });
 
+export const setToken = (token: string): void => {
+  host.defaults.headers.common['X-User-Token'] = token
+}
+
 export const getPaymentList = createAsyncThunk(`get/paymentList`, async ({ } = {}, { dispatch, rejectWithValue }) => {
   try {
     const response = await host.get(`/v1/payment?status=0`)
@@ -144,7 +148,7 @@ export const prosesPayment = createAsyncThunk(`post/paymentProses`, async ({ id,
   }
 })
 
-export const statusPayment = createAsyncThunk(`post/paymentStatus`, async ({ donation_id, data }: { donation_id: number, data: IPaymentStatusBody }, { dispatch, rejectWithValue }) => {
+export const statusPayment = createAsyncThunk(`post/paymentStatus`, async ({ donation_id, data }: { donation_id: number, data?: IPaymentStatusBody }, { dispatch, rejectWithValue }) => {
   try {
     const response = await host.post(`/v1/donation/${donation_id}/status`, data)
     return response.data

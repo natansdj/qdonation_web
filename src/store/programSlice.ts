@@ -30,6 +30,7 @@ export interface ItemProgram {
   program_images: string[];
   program_categories: string[]
   program_info?: ItemProgramInfo[]
+  view_type?:string
 }
 
 export interface ItemProgramList {
@@ -81,9 +82,9 @@ export const host = axios.create({
   }
 });
 
-export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category, more }: { page: number, limit: number, category?: number, more?: boolean }, { dispatch, rejectWithValue }) => {
+export const getListProgram = createAsyncThunk(`get/getListProgram`, async ({ page, limit, category, more,client_code }: { page: number, limit: number, category?: number, more?: boolean, client_code: number }, { dispatch, rejectWithValue }) => {
   try {
-    const response = await host.get(`/v1/program?page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
+    const response = await host.get(`/v1/program?client_code=${client_code}&page=${page}&limit=${limit}${category ? `&category=${category}` : ''}`)
     return response.data
   } catch (error: any) {
     dispatch(setAlertState({
